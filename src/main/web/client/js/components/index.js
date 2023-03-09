@@ -1,0 +1,9 @@
+import "./HTMLDialogExtentionElement.js";
+import "./HTMLLoginElement.js";
+import "./HTMLClanElement.js";
+import "./HTMLMemberElement.js";
+import "./HTMLTeamElement.js";
+import "./HTMLCampaignsElement.js";
+import "./HTMLCampaignElement.js";
+import "./HTMLCampaignMemberElement.js";
+import "./HTMLCampaignMemberSearchField.js";

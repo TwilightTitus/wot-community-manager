@@ -1,0 +1,41 @@
+<dialog>
+	<h3>Campa erstellen</h3>
+	<div>
+		<d-form>
+			<d-page>
+				<d-field name="id" hidden>
+					<input type="number" />
+				</d-field>
+				<d-field name="name" required>
+					<div>
+						<label>Campa Name</label>
+						<input type="text" />
+					</div>
+				</d-field>
+				<fieldset>
+					<legend>Campa Zeitram</legend>
+					<div>
+						<d-field name="startdate" required>
+							<label>von</label>
+							<input type="date" />
+							<div>
+								<d-validation class="text small is-danger" condition="${formUtils.date.greaterEqualNow($value)}">Das Start-Datum kann nicht in der Vergangenheit liegen!</d-validation>
+							</div>
+						</d-field>
+						<d-field name="enddate" required>
+							<label>bis</label>
+							<input type="date" />
+							<div>
+								<d-validation class="text small is-danger" condition="${formUtils.date.greater($value, startdate)}">Das End-Datum muss größer als das Start-Datum sein!</d-validation>
+							</div>
+						</d-field>
+					</div>
+				</fieldset>
+			</d-page>
+			<d-control>
+				<button @click:delegate="action:close-campaign-dialog">close</button>
+				<d-control-submit class="button is-highlight" role="button">speichern</d-control-submit>
+			</d-control>
+		</d-form>
+	</div>
+</dialog>

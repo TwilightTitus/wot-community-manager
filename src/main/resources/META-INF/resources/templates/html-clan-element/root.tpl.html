@@ -1,0 +1,25 @@
+<details>
+    <summary>${name} [${tag}]</summary>
+    <table>
+        <thead>
+            <tr>
+                <th class="width-max-content">Rang</th>
+                <th class="width-full">Name</th>
+                <th class="width-max-content">WTR</th>
+            </tr>
+        </thead>
+        <tbody jstl-foreach="${members}" jstl-foreach-var="member">
+            <tr>
+                <td class="width-max-content" jstl jstl-choose>
+                    <span jstl-when="${member.role == 'combat_officer'}">**</span>
+                    <span jstl-when="${member.role == 'executive_officer'}">****</span>
+                    <span jstl-when="${member.role == 'personnel_officer'}">****</span>
+                    <span jstl-when="${member.role == 'commander'}">Chef</span>                
+                </td>
+                <td class="width-full">${member.name}</td>
+                <td class="width-max-content">${member.wtr}</td>
+            </tr>
+        </tbody>
+
+    </table>
+</details>

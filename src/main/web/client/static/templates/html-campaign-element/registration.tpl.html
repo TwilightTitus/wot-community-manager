@@ -1,0 +1,47 @@
+<dialog>
+    <d-form>
+        <d-page class="container">
+            <jstl jstl-foreach="${days}" jstl-foreach-var="day" jstl-foreach-status="status">                     
+                <d-container name="day${status.number}">                  
+                    <fieldset class="container">
+                        <legend>Tag ${status.number} (${DateFormats.toDate(day)})</legend>                       
+                        <d-field name="available" required>
+                            <label>Anwesenheit?</label>
+                            <div>
+                                <label><input type="radio" name="day${status.number}-available" value="full" checked>voll</label>
+                                <label><input type="radio" name="day${status.number}-available" value="partially">teilweise</label>
+                                <label><input type="radio" name="day${status.number}-available" value="none">gar nicht</label>
+                            </div>
+                        </d-field>
+                        <div class="container is-horizontal with-max-content">
+                            <d-field class="container is-horizontal with-max-content" name="from" required condition="day${status.number}.available == 'partially'">
+                                <label>von</label>
+                                <select>
+                                    <option selected>19:00</option>
+                                    <option>20:00</option>
+                                    <option>21:00</option>
+                                    <option>22:00</option>
+                                    <option>23:00</option>
+                                </select>                        
+                            </d-field>
+                            <d-field class="container is-horizontal with-max-content" name="to" required condition="day${status.number}.available == 'partially'">
+                                <label>bis</label>
+                                <select>
+                                    <option>22:00</option>
+                                    <option>23:00</option>
+                                    <option>00:00</option>
+                                    <option>01:00</option>
+                                    <option selected>02:00</option>
+                                </select>
+                            </d-field>
+                        </div>
+                    </fieldset>
+                </d-container>
+            </jstl>
+        </d-page>
+        <d-control>
+            <button @click:delegate="action:close-registration-dialog">close</button>
+            <d-control-submit class="button is-highlight" role="button">speichern</d-control-submit>
+        </d-control>
+    </d-form>
+</dialog>
