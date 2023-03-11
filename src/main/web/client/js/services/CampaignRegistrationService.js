@@ -33,7 +33,7 @@ export const getRegistrations = async (campaign) =>{
     if(CACHE.has(campaign))
         return Array.from(getCachedRegistrations(campaign).values());
 
-    const registrations = await getJSON(ENDPOINT(campaign));
+    const registrations = (await getJSON(ENDPOINT(campaign))).data;
     for(const registration of registrations)
         cacheRegistration(registration);
 

@@ -3,6 +3,7 @@ package de.titus.wot.community.manager.database.entities;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 
@@ -24,19 +25,19 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Team{
-	
+public class Team {
+
 	/** The id. */
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	/** The name. */
 	private String name;
-	
+
 	/** The campaign. */
 	private long campaignid;
-	
+
 	/** The payload. */
 	@Lob
 	@Convert(converter = JsonNodeConverter.class)

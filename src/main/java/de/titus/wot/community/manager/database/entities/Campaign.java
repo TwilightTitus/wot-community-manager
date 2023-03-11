@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 
@@ -24,22 +25,22 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Campaign{
-	
+public class Campaign {
+
 	/** The id. */
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	/** The name. */
 	private String name;
-	
+
 	/** The start date. */
-	private LocalDate startDate;
-	
+	private LocalDate startdate;
+
 	/** The end date. */
-	private LocalDate endDate;
-	
+	private LocalDate enddate;
+
 	/** The payload. */
 	@Lob
 	@Convert(converter = JsonNodeConverter.class)

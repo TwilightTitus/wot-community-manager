@@ -1,5 +1,6 @@
 package de.titus.wot.community.manager.database.utils;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
@@ -9,24 +10,25 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Converter(autoApply = true)
+@ApplicationScoped
 public class JsonNodeConverter implements AttributeConverter<JsonNode, String> {
-	
+
 	@Inject
 	ObjectMapper mapper;
 
 	@Override
-	public String convertToDatabaseColumn(JsonNode attribute) {
+	public String convertToDatabaseColumn(final JsonNode attribute) {
 		try {
-			return mapper.writeValueAsString(attribute);
-		}catch (Exception e) {
+			return this.mapper.writeValueAsString(attribute);
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 	@Override
-	public JsonNode convertToEntityAttribute(String dbData) {		
+	public JsonNode convertToEntityAttribute(final String dbData) {
 		try {
-			return mapper.readTree(dbData);
+			return this.mapper.readTree(dbData);
 		} catch (JsonProcessingException e) {
 			throw new RuntimeException(e);
 		}

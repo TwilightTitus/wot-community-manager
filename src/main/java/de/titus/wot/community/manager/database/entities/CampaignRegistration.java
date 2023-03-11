@@ -3,9 +3,9 @@ package de.titus.wot.community.manager.database.entities;
 import java.io.Serializable;
 
 import javax.persistence.Convert;
-import javax.persistence.Embeddable;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Lob;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -24,30 +24,28 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
+@IdClass(de.titus.wot.community.manager.database.entities.CampaignRegistration.CombinedId.class)
 public class CampaignRegistration {
-	
-	/**
-	 * The Class CampaignMemberKey.
-	 */
-	@Embeddable
+
 	@Data
 	@ToString
 	@EqualsAndHashCode
-	public static class CampaignMemberKey implements Serializable {
-		
-		/** The Constant serialVersionUID. */
-		private static final long serialVersionUID = 1L;
-
+	@JsonIgnoreProperties(ignoreUnknown = true)
+	public static class CombinedId implements Serializable {
 		/** The campaignid. */
 		private Long campaignid;
-		
+
 		/** The memberid. */
 		private Long memberid;
 	}
-	
-	/** The id. */
-	@EmbeddedId
-	private CampaignMemberKey id;
+
+	/** The campaignid. */
+	@Id
+	private Long campaignid;
+
+	/** The memberid. */
+	@Id
+	private Long memberid;
 
 	/** The fullyavailable. */
 	private boolean fullyavailable;

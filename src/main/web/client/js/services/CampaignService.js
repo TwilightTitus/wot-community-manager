@@ -7,7 +7,7 @@ const CACHE = new Map();
 export const getCampaigns = async () => {
     let campaigns = null
     if(CACHE.size == 0){
-        campaigns = await getJSON(ENDPOINT);
+        campaigns = (await getJSON(ENDPOINT)).data;
         for(const campaign of campaigns)
             CACHE.set(campaign.id, campaign);
     }
@@ -16,9 +16,6 @@ export const getCampaigns = async () => {
         for(const [key, campaign] of CACHE)
             campaigns.push(campaign);
     }
-
-    console.log({campaigns});
-
     return campaigns;
 };
 
@@ -26,20 +23,16 @@ export const getCampaign = async (id) => {
     if(CACHE.has(id))
         return CACHE.get(id);
 
-    const campaign = await getJSON(`${ENDPOINT}/${id}`);
+    const campaign = (await getJSON(`${ENDPOINT}/${id}`));
     CACHE.set(campaign.id, campaign);
-
-    console.log({campaign});
-
+    
     return campaign;
 };
 
 export const storeCampaign = async (campaign) => {
-    campaign = await postJSON(`${ENDPOINT}`, campaign);
+    campaign = (await postJSON(`${ENDPOINT}`, campaign));
     CACHE.set(campaign.id, campaign);
-
-    console.log({campaign});
-
+    
     return campaign;
 };
 

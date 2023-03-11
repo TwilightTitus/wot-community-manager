@@ -1,5 +1,7 @@
 package de.titus.wot.community.manager;
 
+import java.util.Set;
+
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
 import io.quarkus.runtime.annotations.StaticInitSafe;
@@ -14,6 +16,20 @@ import io.smallrye.config.ConfigMapping;
 public interface Configuration {
 	
 	/**
+	 * External url.
+	 *
+	 * @return the string
+	 */
+	public String externalUrl();
+	
+	/**
+	 * Session timeout.
+	 *
+	 * @return the long
+	 */
+	public long sessionTimeout();
+	
+	/**
 	 * Applicationid.
 	 *
 	 * @return the string
@@ -25,14 +41,14 @@ public interface Configuration {
 	 *
 	 * @return the sets the
 	 */
-	public String[] clanids();
+	public Set<String> clanids();
 	
 	/**
 	 * Allowed management roles.
 	 *
 	 * @return the sets the
 	 */
-	public String[] allowedManagementRoles();
+	public Set<String> allowedManagementRoles();
 	
 	/**
 	 * Wot login url.

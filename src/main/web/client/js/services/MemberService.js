@@ -12,7 +12,7 @@ export const currentMember = async () => {
 export const getMembers = async () => {
     let members = null
     if(CACHE.size == 0){
-        members = await getJSON(ENDPOINT);
+        members = (await getJSON(ENDPOINT)).data;
         for(const member of members)
             CACHE.set(member.id, member);
     }

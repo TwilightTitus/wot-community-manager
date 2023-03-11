@@ -6,7 +6,7 @@ const CACHE = new Map();
 
 
 export const getTeams = async () => {
-    const teams = await getJSON(ENDPOINT);
+    const teams = (await getJSON(ENDPOINT)).data;
     for(let team of teams)
         CACHE.set(team.id, team);
 

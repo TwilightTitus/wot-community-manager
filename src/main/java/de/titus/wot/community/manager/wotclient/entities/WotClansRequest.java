@@ -1,6 +1,6 @@
 package de.titus.wot.community.manager.wotclient.entities;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.ws.rs.QueryParam;
 
@@ -13,19 +13,17 @@ import lombok.ToString;
  */
 @Data
 @ToString
-@EqualsAndHashCode
-public class WotClanRequest extends BasicWotRequest{
-
-	
+@EqualsAndHashCode(callSuper = true)
+public class WotClansRequest extends BasicWotRequest{
 	
 	/** The fields. */
 	@QueryParam("fields")
 	private final String fields = "clan_id,name,tag,members.account_id,members.role";
 	
-	/** The memberskey. */
+	/** The clan ids. */
 	@QueryParam("members_key")
-	private final String memberskey = "id";
-	
+	private final String memberKey = "id";
+		
 	/** The clan ids. */
 	@QueryParam("clan_id")
 	private final String clanIds;
@@ -35,9 +33,8 @@ public class WotClanRequest extends BasicWotRequest{
 	 *
 	 * @param theClanIds the the clan ids
 	 */
-	public WotClanRequest(String ... theClanIds) {
-		List<String> ids = List.of(theClanIds);
-		this.clanIds = String.join(", ", ids);
+	public WotClansRequest(Collection<String> theClanIds) {
+		this.clanIds = String.join(", ", theClanIds);
 	}
 	
 }

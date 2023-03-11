@@ -1,7 +1,5 @@
 package de.titus.wot.community.manager.wotclient.entities;
 
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
@@ -9,18 +7,14 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * The Class WotClanResponse.
+ * Instantiates a new wot response.
  */
 @Data
 @ToString
 @EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class WotClanResponse {
-	
-	 /** The status. */
- 	private String status;
-	 
-	 /** The data. */
- 	private Map<String, WotClan> data;
+public class WotResponse {	
 
+	 /** The status. */
+	private String status;	
 }

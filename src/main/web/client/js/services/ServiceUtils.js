@@ -6,7 +6,8 @@ const toURL = (url) => {
 
 export const getJSON = async (url) => {
     const response = await fetch(toURL(url), {headers:{"content-type": "application/json"}});
-    return response.json();
+    if(response.status < 204)
+    	return response.json();
 };
 
 export const postJSON = async (url, data) => {

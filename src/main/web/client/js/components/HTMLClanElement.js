@@ -39,9 +39,9 @@ class HTMLClanElement extends Component {
 				tag: this.attr(ATTR__CLAN_TAG),
 			};
 
-			const response = await fetch(new URL(`/api/clans/${this.#clan.id}/members`, location));
-			const data = await response.json();
-			this.#clan.members = data.members;
+			let response = await fetch(new URL(`/api/clans/${this.#clan.id}/members`, location));
+			response = await response.json();
+			this.#clan.members = response.data;
 		}
 
 		return this.#clan;

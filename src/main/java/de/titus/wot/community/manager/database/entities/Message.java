@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 
@@ -42,7 +43,7 @@ public class Message {
 
 	/** The id. */
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	/** The type. */
@@ -52,8 +53,8 @@ public class Message {
 	/** The reference. */
 	private Long reference;
 
-	/** The memberid. */
-	private Long memberid;
+	/** The editorid. */
+	private Long editorid;
 
 	/** The text. */
 	@Lob
