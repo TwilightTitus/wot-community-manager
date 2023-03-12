@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import de.titus.wot.community.manager.database.MemberRepository;
 import de.titus.wot.community.manager.database.entities.Member;
+import de.titus.wot.community.manager.endpoints.entities.ListResponse;
 
 /**
  * The Class MemberEndpoint.
@@ -31,6 +32,18 @@ public class MemberEndpoint extends BaseEndpoint {
 	/** The member repository. */
 	@Inject
 	MemberRepository memberRepository;
+
+	/**
+	 * Gets the member.
+	 *
+	 * @param aMemberId the a member id
+	 * @return the member
+	 */
+	@GET
+	public ListResponse<Member> getMembers() {
+		this.hasMemberAccess();
+		return new ListResponse<>(this.memberRepository.findAll());
+	}
 
 	/**
 	 * Gets the member.

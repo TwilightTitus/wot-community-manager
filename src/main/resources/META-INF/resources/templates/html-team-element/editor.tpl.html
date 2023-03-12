@@ -17,11 +17,11 @@
             <d-container class="container" name="payload">
                 <fieldset>
                     <legend>FK's</legend>
-                    <x-campaign-member-search-field name="fks" campaign-id="${team.campaignid}"></x-campaign-member-search-field>
+                    <x-team-member-search-field name="fks" ?campaign-id="${typeof team.campaignid === 'number'}" campaign-id="${team.campaignid}"></x-team-member-search-field>
                 </fieldset>
                 <fieldset>
                     <legend>Member</legend>
-                    <x-campaign-member-search-field name="members" campaign-id="${team.campaignid}"></x-campaign-member-search-field>
+                    <x-team-member-search-field name="members" ?campaign-id="${typeof team.campaignid === 'number'}" campaign-id="${team.campaignid}"></x-team-member-search-field>
                 </fieldset>
             </d-container>
         </d-page>

@@ -63,7 +63,7 @@ public class MemberRepository {
 	 *
 	 * @return the list
 	 */
-	public List<Member> allMembers() {
+	public List<Member> findAll() {
 		return this.repository.listAll();
 	}
 

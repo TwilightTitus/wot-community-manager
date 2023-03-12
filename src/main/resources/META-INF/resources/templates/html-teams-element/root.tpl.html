@@ -1,0 +1,6 @@
+<button class="is-highlight" @click:delegate="action:create-team" jstl-if="${accessRights.management}">Neues Teams</button>
+<fieldset>
+	<legend>Teams</legend>
+	<jstl jstl-foreach="${teams}" jstl-foreach-var="team"> <x-team
+		team-id="${team.id}"></x-team> </jstl>
+</fieldset>

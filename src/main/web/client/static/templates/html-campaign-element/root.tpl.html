@@ -4,11 +4,5 @@
 		<button class="is-highlight" @click:delegate="action:show-registrations" jstl-if="${accessRights.management}">Anmeldungen anzeigen</button>
 		<button class="is-danger" @click:delegate="action:delete-campaign" jstl-if="${accessRights.management}">Kamagne löschen <span class="material-icons">delete</span></button>	
 	</summary>
-	<button class="is-highlight" @click:delegate="action:create-team" jstl-if="${accessRights.management}">Neues Team</button>
-	<fieldset>
-		<legend>Teams</legend>
-		<jstl jstl-if="${!!campaign?.payload?.teams}" jstl-foreach="${campaign.payload.teams}" jstl-foreach-var="team">
-			<x-team team-id="${team}" campaign-id="${campaign.id}"></x-team>
-		</jstl>
-	</fieldset>
+	<x-teams campaign-id="${campaign.id}"></x-teams>	
 </details>

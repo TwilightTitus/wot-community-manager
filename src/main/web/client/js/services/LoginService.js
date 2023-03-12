@@ -37,7 +37,7 @@ export const login = async () => {
 	if (!isloggedIn) {
 		if (!await access()){
              location.href = new URL(URL_LOGIN, location).toString();
-             return null;
+             return false;
         }
 
 		isloggedIn = true;

@@ -35,8 +35,23 @@ public class TeamRepository {
 	 *
 	 * @return the list
 	 */
-	public List<Team> allTeams() {
-		return this.repository.listAll();
+	public List<Team> findAll() {
+		return this.repository
+				.find("campaignid IS NULL")
+				.page(0, Integer.MAX_VALUE)
+				.list();
+	}
+
+	/**
+	 * All teams.
+	 *
+	 * @return the list
+	 */
+	public List<Team> findByCampaignId(final Long aCampaignId) {
+		return this.repository
+				.find("campaignid = ?1", aCampaignId)
+				.page(0, Integer.MAX_VALUE)
+				.list();
 	}
 
 	/**

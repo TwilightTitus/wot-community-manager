@@ -2,21 +2,21 @@ import { TEMPLATE_BASEPATH, EVENT__GLOBAL_ACTION_RELOADPARENT } from "../Constan
 import { define } from "@default-js/defaultjs-html-components";
 import { BaseField } from "@default-js/defaultjs-html-form";
 import { Renderer, Template } from "@default-js/defaultjs-template-language";
+import { getMembers } from "../services/MemberService.js";
 import { getRegistrations } from "../services/CampaignRegistrationService.js";
 
 const ATTR_CAMPAIGNID = "campaign-id";
-const NODENAME = "x-campaign-member-search-field";
-const TEMPLATES_PATH = `${TEMPLATE_BASEPATH}/html-campaign-member-search-field-element`;
+const NODENAME = "x-team-member-search-field";
+const TEMPLATES_PATH = `${TEMPLATE_BASEPATH}/html-team-member-search-field-element`;
 const TEMPLATE_ROOT = Template.load(new URL(`${TEMPLATES_PATH}/root.tpl.html`, location));
 const TEMPLATE_DIALOG = Template.load(new URL(`${TEMPLATES_PATH}/dialog.tpl.html`, location));
 
-class HTMLCampaignMemberSearchFieldElement extends BaseField {
+class HTMLTeamMemberSearchFieldElement extends BaseField {
 	static get NODENAME() {
 		return NODENAME;
 	}
 
 	#initialized = false;
-	#registrations = null;
 	#selectionDialog = null;
 
 	constructor() {
@@ -32,8 +32,8 @@ class HTMLCampaignMemberSearchFieldElement extends BaseField {
 			event.stopPropagation();
 			if(!this.readonly){
 				(async () => {
-					const selections = this.#selectionDialog.find(".is-selected x-campaign-member");
-					const memberids = await Promise.all(selections.map(async (selected) => (await selected.getRegistration()).memberid));
+					const selections = this.#selectionDialog.find(".is-selected[member-id]");
+					const memberids = await Promise.all(selections.map((selected) => selected.attr("member-id")));
 					await this.publishValue(memberids);					
 					await this.render();
 					this.#selectionDialog.close();
@@ -47,7 +47,6 @@ class HTMLCampaignMemberSearchFieldElement extends BaseField {
 	async init() {
 		await super.init();
 		if (!this.#initialized) {
-			this.#registrations = await getRegistrations(this.campaignid);
 			this.render();
 		}
 	}
@@ -65,7 +64,16 @@ class HTMLCampaignMemberSearchFieldElement extends BaseField {
 				}
 				return result;
 			})();
-			await Renderer.render({ template, container: root, data: { registrations: this.#registrations, memberids, campaignid: this.campaignid }, mode:"append"});	
+			
+			const campaignid = this.campaignid;
+			const members = await (async () => {
+				if(campaignid)
+					return (await getRegistrations(campaignid)).map(registration => {return { id: registration.memberid};});
+				
+				return getMembers();
+			})();
+			
+			await Renderer.render({ template, container: root, data: { members, memberids, campaignid }, mode:"append"});	
 			this.#selectionDialog = root.find(":scope > dialog").first();
 			
 		}
@@ -79,7 +87,7 @@ class HTMLCampaignMemberSearchFieldElement extends BaseField {
 	}
 
 	get campaignid() {
-		return parseInt(this.attr(ATTR_CAMPAIGNID));
+		return this.attr(ATTR_CAMPAIGNID);
 	}
 
 	async acceptValue(value) {
@@ -96,5 +104,5 @@ class HTMLCampaignMemberSearchFieldElement extends BaseField {
 	}
 }
 
-define(HTMLCampaignMemberSearchFieldElement);
-export default HTMLCampaignMemberSearchFieldElement;
+define(HTMLTeamMemberSearchFieldElement);
+export default HTMLTeamMemberSearchFieldElement;

@@ -4,6 +4,7 @@
 	"description": "",
 	"scripts": {
 		"dev": "webpack --watch --mode=development",
+		"build:live": "webpack --watch --mode=production",
 		"build": "webpack --mode=production"
 	},
 	"type": "module",

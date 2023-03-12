@@ -36,7 +36,7 @@ public class Team {
 	private String name;
 
 	/** The campaign. */
-	private long campaignid;
+	private Long campaignid;
 
 	/** The payload. */
 	@Lob

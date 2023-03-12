@@ -37,11 +37,11 @@ class HTMLCampaignMemberElement extends Component {
 	}
 
 	get campaignid() {
-		return parseInt(this.attr(ATTR__CAMPAIGNID));
+		return this.attr(ATTR__CAMPAIGNID);
 	}
 
 	get memberid() {
-		return parseInt(this.attr(ATTR__MEMBERID));
+		return this.attr(ATTR__MEMBERID);
 	}
 
 	async getRegistration() {

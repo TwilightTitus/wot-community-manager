@@ -44,7 +44,20 @@ public class TeamEndpoint extends BaseEndpoint {
 	@GET
 	public ListResponse<Team> getTeams() {
 		this.hasMemberAccess();
-		return new ListResponse<>(this.teamRepository.allTeams());
+		return new ListResponse<>(this.teamRepository.findAll());
+	}
+
+	/**
+	 * Gets the teams.
+	 *
+	 * @param aCampaignId the a campaign id
+	 * @return the teams
+	 */
+	@GET
+	@Path("/campaign/{campaignid}")
+	public ListResponse<Team> getTeams(@PathParam("campaignid") final Long aCampaignId) {
+		this.hasMemberAccess();
+		return new ListResponse<>(this.teamRepository.findByCampaignId(aCampaignId));
 	}
 
 	/**

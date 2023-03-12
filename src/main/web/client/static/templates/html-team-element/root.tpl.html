@@ -6,15 +6,15 @@
 	<fieldset>
 		<legend>Fks</legend>
 		<div class="container" jstl-if="${!!team?.payload?.fks}" jstl-foreach="${team.payload.fks}" jstl-foreach-var="fk">
-			<x-member member-id="${fk}" jstl-if="${!accessRights.management || typeof team.campaignid === `undefined`}"></x-member>
-			<x-campaign-member campaign-id="${team.campaignid}" member-id="${fk}" jstl-if="${accessRights.management && typeof team.campaignid === `number`}"></x-campaign-member>
+			<x-member member-id="${fk}" jstl-if="${!accessRights.management || !team.campaignid}"></x-member>
+			<x-campaign-member campaign-id="${team.campaignid}" member-id="${fk}" jstl-if="${accessRights.management && team.campaignid}"></x-campaign-member>
 		</div>
 	</fieldset>
 	<fieldset>
 		<legend>Member</legend>
 		<div class="container" jstl-if="${!!team?.payload?.members}" jstl-foreach="${team.payload.members}" jstl-foreach-var="member">
-			<x-member member-id="${member}" jstl-if="${!accessRights.management || typeof team.campaignid === `undefined`}"></x-member>
-			<x-campaign-member campaign-id="${ team.campaignid}" member-id="${member}" jstl-if="${accessRights.management && typeof team.campaignid === `number`}"></x-campaign-member>
+			<x-member member-id="${member}" jstl-if="${!accessRights.management || !team.campaignid}"></x-member>
+			<x-campaign-member campaign-id="${ team.campaignid}" member-id="${member}" jstl-if="${accessRights.management && team.campaignid}"></x-campaign-member>
 		</div>
 	</fieldset>
 </details>

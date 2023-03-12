@@ -3,7 +3,6 @@ import { Component, define } from "@default-js/defaultjs-html-components";
 import { Renderer, Template } from "@default-js/defaultjs-template-language";
 import { getCampaign, deleteCampaign, storeCampaign } from "../services/CampaignService.js";
 import { getRegistrations, getMyRegistration, getRegistrationByMember, storeRegistration } from "../services/CampaignRegistrationService.js";
-import { storeTeam } from "../services/TeamService.js";
 import { accessRights } from "../services/LoginService.js";
 import "@default-js/defaultjs-html-form";
 

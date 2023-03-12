@@ -1,38 +1,37 @@
-import {getJSON, postJSON, deleteJSON} from "./ServiceUtils.js";
+import { getJSON } from "./ServiceUtils.js";
 import { member } from "./LoginService.js";
 
 const ENDPOINT = `/api/members`;
 
+let FULLLOADED = false;
 const CACHE = new Map();
 
 export const currentMember = async () => {
-    return member();
+	return member();
 };
 
 export const getMembers = async () => {
-    let members = null
-    if(CACHE.size == 0){
-        members = (await getJSON(ENDPOINT)).data;
-        for(const member of members)
-            CACHE.set(member.id, member);
-    }
-    else 
-        members = cache.values()
+	let members = null
+	if (!FULLLOADED) {
+		members = (await getJSON(ENDPOINT)).data;
+		for (const member of members)
+			CACHE.set(member.id, member);
 
-    console.log({members});
+		FULLLOADED = true;
+	}
+	else
+		members = Array.from(CACHE.values());
 
-    return members;
+	return members;
 };
 
 export const getMember = async (id) => {
-    if(CACHE.has(id))
-        return CACHE.get(id);
+	if (CACHE.has(id))
+		return CACHE.get(id);
 
-    const member = await getJSON(`${ENDPOINT}/${id}`);
-    
-    console.log({member});
-    if(member)
-        CACHE.set(member.id, member);
+	const member = await getJSON(`${ENDPOINT}/${id}`);
+	if (member)
+		CACHE.set(member.id, member);
 
-    return member;
+	return member;
 }
