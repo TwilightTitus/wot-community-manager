@@ -1,9 +1,10 @@
-import { PAGEURL, URL_LOGIN, URL_ACCESS } from "../Constants.js";
+import {APPGLOBAL, PAGEURL, URL_LOGIN, URL_ACCESS } from "../Constants.js";
+
 const SECOND = 1000;
 const MINUTE = 60 * SECOND;
 
 let isloggedIn = false;
-let ACCESSRIGHT = {};
+let ACCESSRIGHTS = {};
 let MEMBER;
 let ACCESSTOKEN;
 let EXPIREAT;
@@ -18,9 +19,12 @@ const access = async () => {
 	MEMBER = member;
 	ACCESSTOKEN = accessToken;
 	EXPIREAT = expireAt;
-	ACCESSRIGHT = accessRights;
+	ACCESSRIGHTS = accessRights;
 
-    scheduleNexAccessTokenRefresh();
+	APPGLOBALS.member = MEMBER
+	APPGLOBALS.accessRights = ACCESSRIGHTS;
+
+	scheduleNexAccessTokenRefresh();
 
 	return true;
 };
@@ -29,16 +33,16 @@ const scheduleNexAccessTokenRefresh = () => {
 	const timeOffset = EXPIREAT - (Date.now() + MINUTE);
 
 	setTimeout(async () => {
-		await access();		
+		await access();
 	}, timeOffset);
 };
 
 export const login = async () => {
 	if (!isloggedIn) {
-		if (!await access()){
-             location.href = new URL(URL_LOGIN, location).toString();
-             return false;
-        }
+		if (!await access()) {
+			location.href = new URL(URL_LOGIN, location).toString();
+			return false;
+		}
 
 		isloggedIn = true;
 	}
@@ -48,15 +52,15 @@ export const login = async () => {
 
 export const fullAccessData = () => {
 	return {
-		accessToken :ACCESSTOKEN,
-		expireAt : EXPIREAT,
-		member : MEMBER,
-		accessRights: ACCESSRIGHT
+		accessToken: ACCESSTOKEN,
+		expireAt: EXPIREAT,
+		member: MEMBER,
+		accessRights: ACCESSRIGHTS
 	}
 }
 
 export const accessRights = () => {
-	return  ACCESSRIGHT;
+	return ACCESSRIGHTS;
 }
 
 export const member = () => {
@@ -64,5 +68,7 @@ export const member = () => {
 }
 
 export const accessToken = () => {
-    return ACCESSTOKEN;
+	return ACCESSTOKEN;
 }
+
+
