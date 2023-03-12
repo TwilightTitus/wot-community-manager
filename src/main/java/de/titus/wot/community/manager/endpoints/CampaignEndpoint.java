@@ -31,6 +31,7 @@ import de.titus.wot.community.manager.endpoints.entities.ListResponse;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @RequestScoped
+@Transactional
 public class CampaignEndpoint extends BaseEndpoint {
 
 	/** The Constant LOGGER. */
@@ -62,7 +63,6 @@ public class CampaignEndpoint extends BaseEndpoint {
 	 * @return the campaigns
 	 */
 	@POST
-	@Transactional
 	public Campaign getCampaigns(final Campaign aCampaign) {
 		this.hasManagementAccess();
 		return this.campaignRepository.persist(aCampaign);
@@ -75,7 +75,6 @@ public class CampaignEndpoint extends BaseEndpoint {
 	 */
 	@DELETE
 	@Path("/{campaignid}")
-	@Transactional
 	public Response deleteCampaigns(@PathParam("campaignid") final Long aCampaignId) {
 		this.hasManagementAccess();
 		this.campaignRepository.deleteById(aCampaignId);
@@ -105,7 +104,6 @@ public class CampaignEndpoint extends BaseEndpoint {
 	 */
 	@POST
 	@Path("/{campaignid}/registrations")
-	@Transactional
 	public CampaignRegistration getCampaignRegistrations(@PathParam("campaignid") final Long aCampaignId, final CampaignRegistration aRegistration) {
 		this.hasMemberAccess();
 		final Member member = this.getMember();

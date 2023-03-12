@@ -2,6 +2,7 @@ package de.titus.wot.community.manager.endpoints;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -25,6 +26,7 @@ import de.titus.wot.community.manager.endpoints.entities.ListResponse;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @RequestScoped
+@Transactional
 public class ClanEndpoint extends BaseEndpoint {
 
 	/** The Constant LOGGER. */

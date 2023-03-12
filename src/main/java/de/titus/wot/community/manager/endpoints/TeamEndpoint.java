@@ -27,6 +27,7 @@ import de.titus.wot.community.manager.endpoints.entities.ListResponse;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @RequestScoped
+@Transactional
 public class TeamEndpoint extends BaseEndpoint {
 	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(TeamEndpoint.class);
@@ -53,7 +54,6 @@ public class TeamEndpoint extends BaseEndpoint {
 	 * @return the team
 	 */
 	@POST
-	@Transactional
 	public Team storeTeam(final Team aTeam) {
 		this.hasManagementAccess();
 		return this.teamRepository.persist(aTeam);
@@ -80,7 +80,6 @@ public class TeamEndpoint extends BaseEndpoint {
 	 */
 	@DELETE
 	@Path("/{teamid}")
-	@Transactional
 	public Response deleteTeam(@PathParam("teamid") final Long aTeamId) {
 		this.hasManagementAccess();
 		this.teamRepository.delete(aTeamId);
