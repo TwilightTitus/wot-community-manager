@@ -55,33 +55,7 @@ class HTMLCampaignElement extends Component {
 				await deleteCampaign(this.campaignId);
 				this.remove();
 			})();
-		});
-		root.on("action:create-team", (event) => {
-			event.stopPropagation();
-			(async () => {
-				const campaignid = this.campaignId;
-				const team = await storeTeam({ name: "neues Team", campaignid });
-				const campaign = await getCampaign(campaignid);
-				campaign.payload = campaign.payload || {};
-				campaign.payload.teams = campaign.payload.teams || [];
-				const teams = campaign.payload.teams;
-				teams.push(team.id);
-
-				await storeCampaign(campaign);
-
-				this.render();
-			})();
-		});
-		root.on("info:team-deleted", (event) => {
-			event.stopPropagation();
-			const teamId = event.detail;
-			(async () => {
-				const campaign = await getCampaign(this.campaignId);
-				const teams = campaign.payload.teams;
-				teams.splice(teams.indexOf(teamId), 1);
-				await storeCampaign(campaign);
-			})();
-		});
+		});		
 		root.on("action:member-registrate", (event) => {
 			event.stopPropagation();
 			this.openRegistrationDialog();

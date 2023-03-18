@@ -50,7 +50,7 @@ class HTMLTeamElement extends Component {
 	async init() {
 		await super.init();
 		if (!this.#initialized) {
-			await this.render();
+			this.render();
 			this.#initialized = true;
 		}
 	}
@@ -65,7 +65,8 @@ class HTMLTeamElement extends Component {
 
 	async render() {
 		const template = await TEMPLATE__ROOT;
-		await Renderer.render({ template, container: this.root, data: {accessRights: accessRights(), open: this.#open, team: await getTeam(this.teamId) } });
+		const team = await getTeam(this.teamId)
+		await Renderer.render({ template, container: this.root, data: {accessRights: accessRights(), open: this.#open, team } });
 	}
 
 	async editorDialog() {

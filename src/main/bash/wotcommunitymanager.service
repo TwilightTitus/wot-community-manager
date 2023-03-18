@@ -1,0 +1,19 @@
+[Unit]
+Description=Wot Community Manager service
+After=syslog.target network.target
+
+[Service]
+SuccessExitStatus=143
+
+User=wotcommunitymanager
+Group=wotcommunitymanager
+
+Type=simple
+
+
+WorkingDirectory=/opt/wotcommunitymanager
+ExecStart=/usr/bin/java -jar -Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager -Xms256m -Xmx512m -server quarkus-run.jar
+ExecStop=/bin/kill -15 $MAINPID
+
+[Install]
+WantedBy=multi-user.target
