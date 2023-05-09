@@ -2,8 +2,8 @@ package de.titus.wot.community.manager.database.utils;
 
 import java.util.Set;
 
-import javax.inject.Inject;
-import javax.persistence.AttributeConverter;
+import jakarta.inject.Inject;
+import jakarta.persistence.AttributeConverter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;

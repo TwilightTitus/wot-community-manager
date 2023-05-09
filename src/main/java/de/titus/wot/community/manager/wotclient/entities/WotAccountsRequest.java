@@ -2,7 +2,7 @@ package de.titus.wot.community.manager.wotclient.entities;
 
 import java.util.Collection;
 
-import javax.ws.rs.QueryParam;
+import jakarta.ws.rs.QueryParam;
 
 /**
  * The Class WotAccountsRequest.

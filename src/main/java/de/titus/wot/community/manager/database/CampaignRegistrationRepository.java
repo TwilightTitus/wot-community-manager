@@ -2,9 +2,9 @@ package de.titus.wot.community.manager.database;
 
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 
 import de.titus.wot.community.manager.database.entities.CampaignRegistration;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;

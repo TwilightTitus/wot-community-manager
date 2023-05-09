@@ -1,9 +1,9 @@
 package de.titus.wot.community.manager.endpoints;
 
-import javax.inject.Inject;
-import javax.ws.rs.CookieParam;
-import javax.ws.rs.core.Cookie;
-import javax.ws.rs.core.NewCookie;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.CookieParam;
+import jakarta.ws.rs.core.Cookie;
+import jakarta.ws.rs.core.NewCookie;
 
 import de.titus.wot.community.manager.Configuration;
 import de.titus.wot.community.manager.SessionService;

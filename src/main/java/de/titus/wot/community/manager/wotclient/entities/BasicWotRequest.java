@@ -1,6 +1,6 @@
 package de.titus.wot.community.manager.wotclient.entities;
 
-import javax.ws.rs.QueryParam;
+import jakarta.ws.rs.QueryParam;
 
 import org.eclipse.microprofile.config.ConfigProvider;
 

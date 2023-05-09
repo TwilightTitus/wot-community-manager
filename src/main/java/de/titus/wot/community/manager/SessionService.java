@@ -4,8 +4,11 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import io.quarkus.scheduler.Scheduled;
 
@@ -15,8 +18,10 @@ import io.quarkus.scheduler.Scheduled;
 @ApplicationScoped
 public class SessionService {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(SessionService.class);
+
 	/** The Constant SESSION_COOKIE_ID. */
-	public static final String SESSION_COOKIE_ID = "as234-asd324-dfhthj-2435sd";
+	public static final String SESSION_COOKIE_ID = "anehctlsdjtehjsbkfdoejhsdkazle";
 
 	/** The configuration. */
 	@Inject
@@ -155,9 +160,12 @@ public class SessionService {
 	 */
 	@Scheduled(every = "PT60M")
 	public void validateSession() {
+		SessionService.LOGGER.debug(String.format("validate %d sessions", this.sessions.size()));
 		for (Session session : this.sessions.values())
-			if (session.valid(false))
+			if (session.valid(false)) {
+				SessionService.LOGGER.debug(String.format("remove session %s", session.id));
 				this.sessions.remove(session.id);
+			}
 	}
 
 }
