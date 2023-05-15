@@ -128,7 +128,7 @@ public class SyncDataTask {
 		final Member member = new Member();
 		member.setId(aWotAccount.getId());
 		member.setName(aWotAccount.getName());
-		member.setClanid(aWotClan.getId());
+		member.setClanId(aWotClan.getId());
 		member.setClanname(aWotClan.getName());
 		member.setClantag(aWotClan.getTag());
 		String role = aWotClan.getMembers().get(Long.toString(member.getId())).getRole();
@@ -167,7 +167,7 @@ public class SyncDataTask {
 	private void updateExMember(final Collection<Member> theExMember) {
 		SyncDataTask.LOGGER.debug(String.format("Ex Community Members: ", theExMember));
 		List<Member> exMember = theExMember.stream().map((member) -> {
-			member.setClanid(null);
+			member.setClanId(null);
 			member.setClanname(null);
 			member.setClantag(null);
 			member.setRole(Constants.MEMBER_ROLE__EXMEMBER);

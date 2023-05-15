@@ -26,7 +26,7 @@ public class Member {
 	private Long id;
 
 	/** The clanid. */
-	private Long clanid;
+	private Long clanId;
 	
 	/** The clanname. */
 	private String clanname;

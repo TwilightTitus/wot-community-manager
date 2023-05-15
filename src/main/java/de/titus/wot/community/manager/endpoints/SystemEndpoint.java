@@ -169,7 +169,7 @@ public class SystemEndpoint extends BaseEndpoint {
 	private AccessRights createAccessRights(final Member aMember) {
 		final AccessRights accessRights = new AccessRights();
 
-		accessRights.setAccess(aMember.getClanid() != null && aMember.getRole() != null && !Constants.MEMBER_ROLE__EXMEMBER.equalsIgnoreCase(aMember.getRole()));
+		accessRights.setAccess(aMember.getClanId() != null && aMember.getRole() != null && !Constants.MEMBER_ROLE__EXMEMBER.equalsIgnoreCase(aMember.getRole()));
 		accessRights.setManagement(this.configuration.allowedManagementRoles().contains(aMember.getRole()));
 
 		return accessRights;
