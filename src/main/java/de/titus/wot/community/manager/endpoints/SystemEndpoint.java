@@ -3,17 +3,6 @@ package de.titus.wot.community.manager.endpoints;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-
 import org.apache.http.client.utils.URIBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +17,16 @@ import de.titus.wot.community.manager.security.LoginData;
 import de.titus.wot.community.manager.wotclient.WotClient;
 import de.titus.wot.community.manager.wotclient.entities.WotAccount;
 import io.quarkus.security.UnauthorizedException;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 /**
  * The Class SystemEndpoint.
@@ -150,7 +149,7 @@ public class SystemEndpoint extends BaseEndpoint {
 	 */
 	private LoginData buildLoginData(final String anAccessToken, final Long theExpiresAt, final Member aMember, final Session session) {
 		final LoginData loginData = new LoginData();
-		loginData.setAccesToken(anAccessToken);
+		loginData.setAccessToken(anAccessToken);
 		loginData.setExpireAt(System.currentTimeMillis() + theExpiresAt);
 		loginData.setMember(aMember);
 		loginData.setAccessRights(this.createAccessRights(aMember));

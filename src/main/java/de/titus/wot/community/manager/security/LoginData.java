@@ -21,7 +21,7 @@ public class LoginData {
 	public static final String SESSION_KEY = "login-data";
 
 	/** The acces token. */
-	private String accesToken;
+	private String accessToken;
 
 	/** The expires at. */
 	private long expireAt;
