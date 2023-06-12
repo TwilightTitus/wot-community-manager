@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.titus</groupId>
@@ -7,15 +9,15 @@
 	<version>1.0.0</version>
 	<properties>
 		<compiler-plugin.version>3.10.1</compiler-plugin.version>
+		<lombok.version>1.18.26</lombok.version>
 		<maven.compiler.release>17</maven.compiler.release>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
 		<quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-		<quarkus.platform.version>3.0.3.Final</quarkus.platform.version>
+		<quarkus.platform.version>3.1.1.Final</quarkus.platform.version>
 		<skipITs>true</skipITs>
 		<surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
-		<lombok.version>1.18.26</lombok.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -40,7 +42,7 @@
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-mysql</artifactId>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-jackson</artifactId>
@@ -140,6 +142,10 @@
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-container-image-docker</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-junit5</artifactId>
 			<scope>test</scope>
 		</dependency>
@@ -187,7 +193,8 @@
 				<version>${surefire-plugin.version}</version>
 				<configuration>
 					<systemPropertyVariables>
-						<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+						<java.util.logging.manager>
+							org.jboss.logmanager.LogManager</java.util.logging.manager>
 						<maven.home>${maven.home}</maven.home>
 					</systemPropertyVariables>
 				</configuration>
@@ -203,8 +210,10 @@
 						</goals>
 						<configuration>
 							<systemPropertyVariables>
-								<native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
-								<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+								<native.image.path>
+									${project.build.directory}/${project.build.finalName}-runner</native.image.path>
+								<java.util.logging.manager>
+									org.jboss.logmanager.LogManager</java.util.logging.manager>
 								<maven.home>${maven.home}</maven.home>
 							</systemPropertyVariables>
 						</configuration>
