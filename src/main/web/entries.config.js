@@ -6,6 +6,7 @@ export default [
     {
         "type": "module",
         "name": "serviceworker",
+        "filename": "serviceworker.js",
         "target" : "root"
     }
 ];

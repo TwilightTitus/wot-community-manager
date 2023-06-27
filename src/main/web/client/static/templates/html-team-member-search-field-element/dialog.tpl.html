@@ -1,11 +1,16 @@
 <dialog is="x-dialog">
-    <div class="container" jstl-foreach="${members}" jstl-foreach-var="member">
-        <div member-id="${member.id}" class="container is-horizontal is-selectable ${memberids.has(member.id) ? 'is-selected' : ''}" @click:toggleClass:is-selected="">            
-            <span class="material-icons is-selected-marker is-selected">check_box</span>
-            <span class="material-icons is-selected-marker">check_box_outline_blank</span>
-            <x-member member-id="${member.id}" jstl-if="${!campaignid}"></x-member>
-        	<x-campaign-member campaign-id="${campaignid}" member-id="${member.id}" jstl-if="${campaignid}"></x-campaign-member>
-        </div>
+	<div class="container is-horizontal">
+		<input type="search" placeholder="filtern" @input:delegate="action:filter" filter-container=":parent :parent">
+	</div>
+	<div class="view-port">
+	    <div class="container" jstl-foreach="${members}" jstl-foreach-var="member">
+	        <div member-id="${member.id}" class="container is-horizontal is-selectable ${memberids.has('' + member.id) ? 'is-selected' : ''}" @click:toggleClass:is-selected="" filterable>            
+	            <span class="material-icons is-selected-marker is-selected">check_box</span>
+	            <span class="material-icons is-selected-marker">check_box_outline_blank</span>
+	            <x-member member-id="${member.id}" jstl-if="${!campaignid}"></x-member>
+	        	<x-campaign-member campaign-id="${campaignid}" member-id="${member.id}" jstl-if="${campaignid}"></x-campaign-member>
+	        </div>
+	    </div>
     </div>
     <div class="container is-horizontal">
         <button close-modal>close</button>

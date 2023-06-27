@@ -1,12 +1,11 @@
-const VERSION = 1;
+const VERSION = "1.1.0";
 
 
 const CACHENAME = `wot-clan-manager:${VERSION}`;
 
 const INITAL_CACHED_FILES = ["/index.html"];
 const ALLOWED_URLS = [new RegExp(`${location.origin}/.*`, "i")];
-//const DENIED_URLS = [new RegExp(`http://localhost:8080/api/(?!(system/access)).*`, "i")];
-const DENIED_URLS = [new RegExp(`http://localhost:8080/api/.*`, "i")];
+const DENIED_URLS = [new RegExp(`${location.origin}/api/.*`, "i")];
 
 const matchByFilter = (url, filters) => {
 	for (let filter of filters)
@@ -81,14 +80,14 @@ self.addEventListener("fetch", (event) => {
 // Communicate via MessageChannel.
 self.addEventListener("message", function(event) {
 	console.log(`Received message from main thread: ${event.data}`);
-	event.ports[0].postMessage(`Got message! Sending direct message back - "${event.data}"`);
-});
+	if(event.data == "validate-cache"){
+		(async () => {
+			await self.clients.claim();
 
-// Broadcast via postMessage.
-function sendMessage(message) {
-	self.clients.matchAll().then(function(clients) {
-		clients.map(function(client) {
-			return client.postMessage(message);
-		});
-	});
-}
+			const cachenames = await caches.keys();
+			cachenames.map((cacheName) => {
+				return caches.delete(cacheName);
+			});
+		})() 
+	}
+});

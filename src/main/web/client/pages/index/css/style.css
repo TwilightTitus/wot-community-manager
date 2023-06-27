@@ -25,7 +25,7 @@
 }
 
 [hidden], [type=hidden], .hidden{
-    display: none;
+    display: none !important;
 }
 
 .material-icons{    
@@ -120,6 +120,10 @@ d-route-link {
 details[open] summary {
 	margin-bottom: 1rem;
 	
+}
+
+.view-port{
+	overflow-x: auto;	
 }
 
 

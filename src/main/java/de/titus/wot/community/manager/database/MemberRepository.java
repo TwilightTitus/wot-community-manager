@@ -3,12 +3,13 @@ package de.titus.wot.community.manager.database;
 import java.util.Collection;
 import java.util.List;
 
+import de.titus.wot.community.manager.Configuration;
+import de.titus.wot.community.manager.database.entities.Member;
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
-
-import de.titus.wot.community.manager.database.entities.Member;
-import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 /**
  * The Class MemberRepository.
@@ -22,6 +23,10 @@ public class MemberRepository {
 	static class Repository implements PanacheRepository<Member> {
 
 	}
+
+	/** The configuration. */
+	@Inject
+	Configuration configuration;
 
 	/** The entity manager. */
 	@Inject
@@ -64,7 +69,16 @@ public class MemberRepository {
 	 * @return the list
 	 */
 	public List<Member> findAll() {
-		return this.repository.listAll();
+		return this.repository.listAll(Sort.by("name"));
+	}
+
+	/**
+	 * Find all at community.
+	 *
+	 * @return the list
+	 */
+	public List<Member> findAllAtCommunity() {
+		return this.repository.list("clanId in ?1", Sort.by("name"), this.configuration.clanids().stream().map(Long::parseLong).toList());
 	}
 
 	/**
@@ -74,7 +88,7 @@ public class MemberRepository {
 	 * @return the list
 	 */
 	public List<Member> allMembersByClan(final Long aClanId) {
-		return this.repository.find("clanId = ?1", aClanId).page(0, Integer.MAX_VALUE).list();
+		return this.repository.list("clanId = ?1", Sort.by("name"), aClanId);
 	}
 
 	/**

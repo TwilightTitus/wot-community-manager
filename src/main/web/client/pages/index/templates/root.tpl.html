@@ -1,4 +1,4 @@
-<d-application route="home"> 
+<d-application route="campaigns"> 
 	<header>		
 		<a href="/" class="header-member">
 			<span><strong>${APPGLOBALS.member.name} [${APPGLOBALS.member.clantag}]</strong></span>
@@ -8,15 +8,15 @@
 			
 		<nav class="header-navigation">
 			<ul @click:toggleclass:show="header .header-navigation">
-				<li><d-route name="home"
-						template="/templates/index/home.tpl.html" stateful>Home</d-route></li>
+				<!--<li><d-route name="home"
+						template="/templates/index/home.tpl.html" stateful>Home</d-route></li>-->
 				<li><d-route name="clans"
 						template="/templates/index/clans.tpl.html" stateful>Member</d-route>
 				</li>
 				<li><d-route name="teams"
 						template="/templates/index/teams.tpl.html" stateful>Teams</d-route>
 				</li>
-				<li><d-route name="Campaigns" component-tag="x-campaigns"
+				<li><d-route name="campaigns" component-tag="x-campaigns"
 						stateful>Campaigns</d-route></li>
 				<!-- <li><d-route name="management"
 						template="/templates/index/management.tpl.html" stateful>Management</d-route>

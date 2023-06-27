@@ -16,7 +16,7 @@
                     <span jstl-when="${member.role == 'personnel_officer'}">****</span>
                     <span jstl-when="${member.role == 'commander'}">Chef</span>                
                 </td>
-                <td class="width-full">${member.name}</td>
+                <td class="width-full"><a href="https://www.tomato.gg/stats/EU/${member.name}=${member.id}" target="_blank" title="https://www.tomato.gg">${member.name} [${member.clantag ? member.clantag : ''}]</a></td>
                 <td class="width-max-content">${member.wtr}</td>
             </tr>
         </tbody>

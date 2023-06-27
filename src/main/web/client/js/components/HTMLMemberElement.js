@@ -36,7 +36,8 @@ class HTMLMemberElement extends Component {
 
     async render() {
         const template = await TEMPLATE_ROOT;
-		const member = await getMember(this.memberId);
+		const member = await getMember(this.memberId);		
+		this.attr("filterable-content", `${member.name}`.toLowerCase());
 		await Renderer.render({ container: this.root, template, data: {member} });
     }
 }

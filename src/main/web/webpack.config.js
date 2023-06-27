@@ -40,11 +40,11 @@ export default (env, argv) => {
 		output: {
 			filename: (pathData) => {
 				const name = pathData.chunk.name;
-				const {type, target} = getEntry(name);
+				const {type, target, filename} = getEntry(name);
 
 				const path = target == "root" ? "" : "js/"; 
-				const filename = prod ? "[name].[contenthash].min.js" : "[name].js";
-				return `${path}${filename}`; 
+				const file = filename ? filename : prod ? "[name].[contenthash].min.js" : "[name].js";
+				return `${path}${file}`; 
 			  },
 			path: `${buildPath}`,
 			clean: true,

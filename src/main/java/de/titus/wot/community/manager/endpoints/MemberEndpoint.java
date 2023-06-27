@@ -1,5 +1,11 @@
 package de.titus.wot.community.manager.endpoints;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import de.titus.wot.community.manager.database.MemberRepository;
+import de.titus.wot.community.manager.database.entities.Member;
+import de.titus.wot.community.manager.endpoints.entities.ListResponse;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -9,13 +15,6 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import de.titus.wot.community.manager.database.MemberRepository;
-import de.titus.wot.community.manager.database.entities.Member;
-import de.titus.wot.community.manager.endpoints.entities.ListResponse;
 
 /**
  * The Class MemberEndpoint.
@@ -42,7 +41,7 @@ public class MemberEndpoint extends BaseEndpoint {
 	@GET
 	public ListResponse<Member> getMembers() {
 		this.hasMemberAccess();
-		return new ListResponse<>(this.memberRepository.findAll());
+		return new ListResponse<>(this.memberRepository.findAllAtCommunity());
 	}
 
 	/**
