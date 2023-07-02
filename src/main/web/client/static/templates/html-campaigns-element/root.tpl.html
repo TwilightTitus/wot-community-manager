@@ -1,7 +1,10 @@
-<h1>Campa Manager</h1>
-<div>
-   <button class="is-highlight" @click:delegate="action:create-campaign" jstl-if="${accessRights.management}">start Campaign</button> 
-   <div jstl-foreach="${campaigns}" jstl-foreach-var="campaign">
-      <x-campaign campaign-id="${campaign.id}"></x-campaign>      
-   </div>
+<div class="container">
+	<h1>
+		Campaign Manager
+		<button class="is-highlight" @click:delegate="action:create-campaign" jstl-if="${accessRights.management}">start Campaign</button>
+	</h1>
+	
+	<div class="container" jstl-foreach="${campaigns}" jstl-foreach-var="campaign">
+		<x-campaign campaign-id="${campaign.id}"></x-campaign>
+	</div>
 </div>

@@ -1,10 +1,15 @@
-<details ?open="${open}" open @toggle:delegate="action:toogle-details">
+<details ?open="${open}" open @toggle:delegate="action:toogle-details" >
 	<summary>
 		${campaign.name} (${new Date(campaign.startdate).toLocaleDateString()} - ${new Date(campaign.enddate).toLocaleDateString()})
-		</br>
 		<button class="is-highlight" @click:delegate="action:member-registrate">anmelden</button>
-		<button class="is-highlight" @click:delegate="action:show-registrations" jstl-if="${accessRights.management}">Anmeldungen anzeigen</button>
-		<button class="is-danger" @click:delegate="action:delete-campaign" jstl-if="${accessRights.management}">Kamagne löschen <span class="material-icons">delete</span></button>	
 	</summary>
-	<x-teams campaign-id="${campaign.id}"></x-teams>	
+	<div class="container">
+		<div class="container is-horizontal">
+			<button class="is-highlight" @click:delegate="action:show-registrations" jstl-if="${accessRights.management}">Anmeldungen anzeigen</button>
+			<button class="is-danger" @click:delegate="action:delete-campaign" jstl-if="${accessRights.management}">Kamagne löschen <span class="material-icons">delete</span></button>
+		</div>
+		<div class="container">
+			<x-teams campaign-id="${campaign.id}"></x-teams>
+		</div>	
+	</div>
 </details>
