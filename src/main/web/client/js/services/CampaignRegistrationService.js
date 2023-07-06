@@ -6,6 +6,10 @@ const ENDPOINTBYMEMBER = (campaign, member) => `${ENDPOINT(campaign)}/${member}`
 
 const CACHE = new Map();
 
+const clearCache = (campaignid) => {
+	CACHE.set(campaignid, new Map());
+}
+
 const getCachedRegistrations = (campaign) => {
     return CACHE.get(campaign);
 }
@@ -29,10 +33,11 @@ const cacheRegistration = (registration) =>{
     cache.set(memberid, registration);
 }
 
-export const getRegistrations = async (campaign) =>{
-    if(CACHE.has(campaign))
+export const getRegistrations = async (campaign, fullload) =>{
+    if(!fullload && CACHE.has(campaign))
         return Array.from(getCachedRegistrations(campaign).values());
 
+	clearCache(campaign);
     const registrations = (await getJSON(ENDPOINT(campaign))).data;
     for(const registration of registrations)
         cacheRegistration(registration);

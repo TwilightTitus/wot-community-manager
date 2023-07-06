@@ -137,7 +137,7 @@ class HTMLCampaignElement extends Component {
 
 	async showRegistrations() {
 		const template = await TEMPLATE_REGISTRATIONS;
-		const registrations = await getRegistrations(this.campaignId);
+		const registrations = await getRegistrations(this.campaignId, true);
 		const result = await Renderer.render({ container: this, template, data: { registrations }, mode: "append" });
 		const dialog = result.content[0];
 		dialog.on("close", () => {
