@@ -34,7 +34,7 @@ class HTMLTeamMemberSearchFieldElement extends BaseField {
 				(async () => {
 					const selections = this.#selectionDialog.find(".is-selected[member-id]");
 					const memberids = await Promise.all(selections.map((selected) => selected.attr("member-id")));
-					await this.publishValue(memberids);					
+					await this.publishValue(memberids || null);					
 					await this.render();
 					this.#selectionDialog.close();
 					this.#selectionDialog.remove();

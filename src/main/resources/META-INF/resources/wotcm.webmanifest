@@ -1,7 +1,8 @@
 {
 	"short_name": "WOTCM",
 	"name": "World of Tanks - Community Manager",
-	"display": "standalone",
+	"display": "standalone",	
+	"orientation": "any",
 	"lang": "de_DE",
 	"icons": [
 		{

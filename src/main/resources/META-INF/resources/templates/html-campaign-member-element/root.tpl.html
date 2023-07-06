@@ -3,7 +3,9 @@
 		<jstl jstl-choose>
 			<div class="availability-marker is-none" jstl-when="${avail.available == 'none'}"></div>
 			<div class="availability-marker is-full" jstl-when="${avail.available == 'full'}"></div>
-			<div class="availability-marker is-partially" jstl-otherwise title="${avail.from} - ${avail.to}"></div>
+			<div class="availability-marker is-partially with-tooltip" jstl-otherwise title="${avail.from} - ${avail.to}" @click:toggleClass:show-tooltip="">
+				<div class="tooltip">${avail.from} - ${avail.to}</div>
+			</div>
 		</jstl>
 	</div>
 	<x-member member-id="${registration.memberid}"></x-member>
