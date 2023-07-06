@@ -43,6 +43,7 @@ class HTMLTeamMemberSearchFieldElement extends BaseField {
 			}
 		});
 		root.on("action:filter", (event) => {
+			event.stopPropagation();
 			const target = event.target;
 			const value = target.value;
 			const filterContainer = target.find(target.attr("filter-container")).first();
@@ -52,8 +53,7 @@ class HTMLTeamMemberSearchFieldElement extends BaseField {
 					const content = element.find("x-member[filterable-content]").first().attr("filterable-content");
 					if(content.search(value) < 0)
 						element.addClass("hidden");				
-				});
-			
+				});			
 		});
 	}
 

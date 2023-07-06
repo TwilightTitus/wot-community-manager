@@ -60,6 +60,8 @@ class HTMLCampaignElement extends Component {
 			event.stopPropagation();
 			this.openRegistrationDialog();
 		});
+		
+		
 	}
 
 	async init() {
@@ -140,6 +142,20 @@ class HTMLCampaignElement extends Component {
 		const registrations = await getRegistrations(this.campaignId, true);
 		const result = await Renderer.render({ container: this, template, data: { registrations }, mode: "append" });
 		const dialog = result.content[0];
+		dialog.on("action:filter", (event) => {
+			event.stopPropagation();
+			const target = event.target;
+			const value = target.value;
+			const filterContainer = target.find(target.attr("filter-container")).first();
+			filterContainer.find("[filterable]").removeClass("hidden");
+			if(value.length > 0)
+				filterContainer.find("[filterable]").forEach((element) => {
+					const content = element.find("x-member[filterable-content]").first().attr("filterable-content");
+					if(content.search(value) < 0)
+						element.addClass("hidden");				
+				});			
+		});
+		
 		dialog.on("close", () => {
 			dialog.remove();
 		});

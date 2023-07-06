@@ -1,6 +1,11 @@
 <dialog is="x-dialog">
-    <div class="container" jstl-foreach="${registrations}" jstl-foreach-var="registration">
-        <x-campaign-member campaign-id="${registration.campaignid}" member-id="${registration.memberid}"></x-campaign-member>
+	<div class="container is-horizontal">
+		<input type="search" placeholder="filtern" @input:delegate="action:filter" filter-container=":parent :parent">
+	</div>
+	<div class="view-port">
+	    <div class="container" jstl-foreach="${registrations}" jstl-foreach-var="registration">
+	        <x-campaign-member campaign-id="${registration.campaignid}" member-id="${registration.memberid}" filterable></x-campaign-member>
+	    </div>
     </div>
     <div class="container">
         <button close-modal>schließen</button>
