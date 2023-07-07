@@ -9,9 +9,12 @@ class HTMLDialogExtentionElement extends componentBaseOf(HTMLDialogElement){
 
     constructor(){
         super();
-        this.on("click", ({target}) => {
-            if(target.is(CLOSEMARKER))
+        this.on("click", (event) => {
+			const {target} = event;
+            if(target.is(CLOSEMARKER)){
+				event.stopPropagation();
                 this.close();
+            }
         });
     }
 

@@ -1,4 +1,4 @@
-import {getJSON, postJSON, deleteJSON} from "./ServiceUtils.js";
+import { getJSON, postJSON, deleteJSON } from "./ServiceUtils.js";
 import { member } from "./LoginService.js";
 
 const ENDPOINT = (campaign) => `/api/campaigns/${campaign}/registrations`;
@@ -6,60 +6,65 @@ const ENDPOINTBYMEMBER = (campaign, member) => `${ENDPOINT(campaign)}/${member}`
 
 const CACHE = new Map();
 
-const clearCache = (campaignid) => {
-	CACHE.set(campaignid, new Map());
+const clearCache = (campaign) => {
+	CACHE.set(`${campaign}`, new Map());
 }
 
-const getCachedRegistrations = (campaign) => {
-    return CACHE.get(campaign);
-}
-const getCachedRegistration = (campaign, member) => {    
-    const registrations = getCachedRegistrations(campaign);
-    if(registrations)
-        return registrations.get(member);
+const getCachedRegistrations = (campaign, create = false) => {
+	const key = `${campaign}`;
+	let registrations = CACHE.get() || null;
+	if (!registrations && create) {
+		registrations = new Map();
+		registrations.fullloaded = false;
+		CACHE.set(key, registrations);
+	}
 
-    return null;
-}
-
-const cacheRegistration = (registration) =>{
-    if(!registration) return;
-    const { campaignid, memberid } = registration;
-    const cache = (() => {
-        if(!CACHE.has(campaignid))
-            CACHE.set(campaignid, new Map());
-
-        return CACHE.get(campaignid);
-    })();
-    cache.set(memberid, registration);
+	return registrations;
 }
 
-export const getRegistrations = async (campaign, fullload) =>{
-    if(!fullload && CACHE.has(campaign))
-        return Array.from(getCachedRegistrations(campaign).values());
+const getCachedRegistration = (campaign, member) => {
+	const registrations = getCachedRegistrations(campaign);
+	if (registrations)
+		return registrations.get(member);
 
-	clearCache(campaign);
-    const registrations = (await getJSON(ENDPOINT(campaign))).data;
-    for(const registration of registrations)
-        cacheRegistration(registration);
+	return null;
+}
 
-    return registrations;
+const cacheRegistration = (registration, cache) => {
+	if (!registration) return;
+	const { campaignid, memberid } = registration;
+	const registrations = cache || getCachedRegistrations(campaignid, true);
+	registrations.set(memberid, registration);
+}
+
+export const getRegistrations = async (campaign) => {
+	const registrations = getCachedRegistrations(campaign, true);
+	if (!registrations.fullloaded) {
+		const response = (await getJSON(ENDPOINT(campaign))).data;
+		for (const registration of response)
+			cacheRegistration(registration, registrations);
+
+		registrations.fullloaded = true;
+	}
+
+	return Array.from(registrations.values());;
 }
 
 export const storeRegistration = async (campaign, registration) => {
-    registration = await postJSON(ENDPOINT(campaign), registration);
-    cacheRegistration(registration);
-    return registration;
+	registration = await postJSON(ENDPOINT(campaign), registration);
+	cacheRegistration(registration);
+	return registration;
 }
 
 export const getMyRegistration = async (campaign) => {
-    return getRegistrationByMember(campaign,  member().id);
-} 
+	return getRegistrationByMember(campaign, member().id);
+}
 
 export const getRegistrationByMember = async (campaign, member) => {
-    let registration = getCachedRegistration(campaign, member);
-    if(!registration){
-        registration = await getJSON(ENDPOINTBYMEMBER(campaign, member));
-        cacheRegistration(registration);
-    }
-    return registration;
+	let registration = getCachedRegistration(campaign, member);
+	if (!registration) {
+		registration = await getJSON(ENDPOINTBYMEMBER(campaign, member));
+		cacheRegistration(registration);
+	}
+	return registration;
 } 
