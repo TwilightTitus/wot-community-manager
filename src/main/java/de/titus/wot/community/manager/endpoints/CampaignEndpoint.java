@@ -96,7 +96,7 @@ public class CampaignEndpoint extends BaseEndpoint {
 	public ListResponse<CampaignRegistration> getCampaignRegistrations(@PathParam("campaignid") final Long aCampaignId) {
 		List<CampaignRegistration> registrations = null;
 		AccessRights accessRigts = this.getAccessRights();
-		if (!accessRigts.isManagement())
+		if (accessRigts.isManagement())
 			registrations = this.campaignRegistrationRepository.findByCampaign(aCampaignId);
 		else {
 			registrations = new ArrayList<>();
