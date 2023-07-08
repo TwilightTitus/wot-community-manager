@@ -1,5 +1,18 @@
 package de.titus.wot.community.manager.endpoints;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import de.titus.wot.community.manager.database.CampaignRegistrationRepository;
+import de.titus.wot.community.manager.database.CampaignRepository;
+import de.titus.wot.community.manager.database.entities.Campaign;
+import de.titus.wot.community.manager.database.entities.CampaignRegistration;
+import de.titus.wot.community.manager.database.entities.Member;
+import de.titus.wot.community.manager.endpoints.entities.ListResponse;
+import de.titus.wot.community.manager.security.AccessRights;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -13,16 +26,6 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import de.titus.wot.community.manager.database.CampaignRegistrationRepository;
-import de.titus.wot.community.manager.database.CampaignRepository;
-import de.titus.wot.community.manager.database.entities.Campaign;
-import de.titus.wot.community.manager.database.entities.CampaignRegistration;
-import de.titus.wot.community.manager.database.entities.Member;
-import de.titus.wot.community.manager.endpoints.entities.ListResponse;
 
 /**
  * The Class CampaignEndpoint.
@@ -91,8 +94,19 @@ public class CampaignEndpoint extends BaseEndpoint {
 	@GET
 	@Path("/{campaignid}/registrations")
 	public ListResponse<CampaignRegistration> getCampaignRegistrations(@PathParam("campaignid") final Long aCampaignId) {
-		this.hasManagementAccess();
-		return new ListResponse<>(this.campaignRegistrationRepository.findByCampaign(aCampaignId));
+		List<CampaignRegistration> registrations = null;
+		AccessRights accessRigts = this.getAccessRights();
+		if (!accessRigts.isManagement())
+			registrations = this.campaignRegistrationRepository.findByCampaign(aCampaignId);
+		else {
+			registrations = new ArrayList<>();
+			final Member member = this.getMember();
+			final CampaignRegistration registration = this.campaignRegistrationRepository.findByCampaignAndMember(aCampaignId, member.getId());
+			if (registration != null)
+				registrations.add(registration);
+		}
+
+		return new ListResponse<>(registrations);
 	}
 
 	/**

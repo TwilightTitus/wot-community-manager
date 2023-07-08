@@ -3,7 +3,8 @@ import { member } from "./LoginService.js";
 import { getMember } from "./MemberService.js";
 import Cache from "./Cache.js";
 
-const ENDPOINT = (campaign) => `/api/campaigns/${campaign}/registrations`;
+const ENDPOINT = (campaignid) => `/api/campaigns/${campaignid}/registrations`;
+const ENDPOINT_MEMBER_REGISTRATIOIN = (campaignid, memberid) => `/api/campaigns/${campaignid}/registrations/${memberid}`;
 
 
 const CACHE = new Cache(10 * 60 * 1000);
