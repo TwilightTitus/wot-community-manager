@@ -2,26 +2,36 @@ import { getJSON } from "./ServiceUtils.js";
 import { member } from "./LoginService.js";
 
 const ENDPOINT = `/api/members`;
+const EXPIREAFTER = 60 * 60 * 1000;
 
-let FULLLOADED = false;
-const CACHE = new Map();
+let EXPIRESAT = 0;
+const getCache = (() => {
+	let members = null;
+	return async () => {
+		if (members == null || EXPIRESAT < Date.now()) {
+			members = loadMembers();
+			EXPIRESAT = Date.now() + EXPIREAFTER;
+		}
+		return await members;
+	}
+})();
+
+const loadMembers = async () => {
+	const members = new Map();
+	const response = (await getJSON(ENDPOINT)).data;
+	for (const member of response)
+		members.set(`${member.id}`, member);
+
+	return members;
+}
 
 export const currentMember = async () => {
 	return member();
 };
 
 export const getMembers = async () => {
-	let members = null
-	if (!FULLLOADED) {
-		members = (await getJSON(ENDPOINT)).data;
-		for (const member of members)
-			CACHE.set(member.id, member);
-
-		FULLLOADED = true;
-	}
-	else
-		members = Array.from(CACHE.values());
-
+	const cache = await getCache();
+	const members = Array.from(cache.values());
 	return members.sort((a, b) => {
 		if (a.name < b.name)
 			return -1;
@@ -31,13 +41,7 @@ export const getMembers = async () => {
 	});
 };
 
-export const getMember = async (id) => {
-	if (CACHE.has(id))
-		return CACHE.get(id);
-
-	const member = await getJSON(`${ENDPOINT}/${id}`);
-	if (member)
-		CACHE.set(member.id, member);
-
-	return member;
+export const getMember = async (memberid) => {
+	const cache = await getCache();
+	return cache.get(`${memberid}`);
 }
