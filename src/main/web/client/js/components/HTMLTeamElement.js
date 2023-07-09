@@ -27,17 +27,19 @@ class HTMLTeamElement extends Component {
 		const root = this.root;
 		root.on("action:toogle-details", (event) => {
 			event.stopPropagation();
-			const {target} = event;
-			if (target instanceof HTMLDetailsElement) 
+			const { target } = event;
+			if (target instanceof HTMLDetailsElement)
 				this.#open = target.open;
 		});
 		root.on("action:delete-team", (event) => {
 			event.stopPropagation();
 			(async () => {
-				const teamId = this.teamId;
-				await deleteTeam(teamId);
-				this.trigger("info:team-deleted", teamId);
-				this.remove();
+				if (confirm("Soll das Team wirklich gelöscht werden?")) {
+					const teamId = this.teamId;
+					await deleteTeam(teamId);
+					this.trigger("info:team-deleted", teamId);
+					this.remove();
+				}
 			})();
 		});
 
@@ -66,7 +68,7 @@ class HTMLTeamElement extends Component {
 	async render() {
 		const template = await TEMPLATE__ROOT;
 		const team = await getTeam(this.teamId)
-		await Renderer.render({ template, container: this.root, data: {accessRights: accessRights(), open: this.#open, team } });
+		await Renderer.render({ template, container: this.root, data: { accessRights: accessRights(), open: this.#open, team } });
 	}
 
 	async editorDialog() {

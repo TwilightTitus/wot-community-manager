@@ -52,8 +52,10 @@ class HTMLCampaignElement extends Component {
 		root.on("action:delete-campaign", (event) => {
 			event.stopPropagation();
 			(async () => {
-				await deleteCampaign(this.campaignId);
-				this.remove();
+				if(confirm("Soll die Kampagne wirklich gelöscht werden?")){				
+					await deleteCampaign(this.campaignId);
+					this.remove();
+				}
 			})();
 		});		
 		root.on("action:member-registrate", (event) => {
