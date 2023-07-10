@@ -10,11 +10,12 @@
 			<span class="is-small">Sortieren nach:</span> 
 			<button class="is-link is-small" sort-container-selector=":parent :parent :parent :parent [sort-container]" sort-by="name" @click:delegate="action:sort">Name</button>
 		    <button class="is-link is-small" sort-container-selector=":parent :parent :parent :parent [sort-container]" sort-by="availability" @click:delegate="action:sort">Anwesenheit</button>
+		    <button class="is-link is-small" sort-container-selector=":parent :parent :parent :parent [sort-container]" sort-by="clan" @click:delegate="action:sort">Clan</button>
 		</div>		
 	</div>
 	<div class="view-port">
 		<div class="container" jstl-foreach="${registrations}" jstl-foreach-var="registration" sort-container>
-			<x-campaign-member campaign-id="${registration.campaignid}" member-id="${registration.memberid}" filterable sort-by-name="${registration.member.name.toLowerCase()}" sort-by-availability="${functions.calcCampaignAvailability(registration)}"></x-campaign-member>
+			<x-campaign-member campaign-id="${registration.campaignid}" member-id="${registration.memberid}" filterable sort-by-name="${registration.member.name.toLowerCase()}" sort-by-availability="${functions.calcCampaignAvailability(registration)}" sort-by-clan="${registration.member.clantag.toLowerCase()}"></x-campaign-member>
 		</div>
 	</div>
 	<div class="container">
