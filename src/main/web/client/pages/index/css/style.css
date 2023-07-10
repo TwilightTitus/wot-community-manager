@@ -62,7 +62,7 @@ header {
 
 input:not([type="checkbox"], [type="radio"]),
 select {
-	display: block;
+	display: inline-block;
 	/*width = 100% - [padding left-right] - [border left-right]*/
 	width: calc(100% - 2 * 0.225rem - 2 * var(--border-size));
 	max-width: 100%;
@@ -95,12 +95,12 @@ d-route-link {
 
 
 /*text*/
-:is(span, p, label, .text).is-small {
+.is-small {
 	font-size: calc(1em - 33%);
 }
 
 
-:is(span, p, label, .text).is-danger {
+.is-danger {
 	--color-text: var(--color-danger);
 }
 
@@ -117,10 +117,6 @@ d-route-link {
 
 .container.is-horizontal.with-max-content {
 	grid: auto / auto-flow auto;
-}
-
-.with-max-content {
-	width: max-content;
 }
 
 /*details*/
@@ -210,6 +206,14 @@ button:is(:hover, :focus),
 	--button-bg-color-focus: var(--color-danger);
 }
 
+:is(button, .button).is-link {	
+	border: none;
+	padding: 0 .333rem 0 0;
+	margin: 0;
+	font-weight: normal;
+	text-decoration: underline;
+}
+
 /*messages*/
 .message {
 	padding: 1rem;
@@ -254,11 +258,18 @@ tr:nth-child(even) {
 	max-width: max-content;
 }
 
+.container.is-horizontal > .align-right{
+	justify-self: end;	
+}
+
+:not(.container.is-horizontal) > .align-right {
+	margin-left: auto;
+}
+
 
 /* registration availability*/
 .is-availability-markers {
 	gap: 0.125rem;
-	position: relative;
 }
 
 .availability-marker {

@@ -9,9 +9,13 @@ import "./css/style.css";
 import "./css/form.css";
 import "./css/header.css";
 
+//mixins
+import "../../js/mixins/FilterContent.js";
+import "../../js/mixins/SortContent.js";
 
 
 // custom code
+import "../../js/GlobalFunctions.js";
 import "../../js/javascript-extentions/index.js";
 import "../../js/RegistrateServiceWorker.js";
 import "../../js/components/index.js";

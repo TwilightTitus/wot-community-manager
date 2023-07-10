@@ -2,12 +2,22 @@
 	<div class="container is-horizontal">
 		<input type="search" placeholder="filtern" @input:delegate="action:filter" filter-container=":parent :parent">
 	</div>
+	<div class="container is-horizontal with-max-content">
+		<div class="is-small">
+			<span>${registrations.length || 0} Anmeldung(en)</span>
+		</div>
+		<div class="width-max-content align-right">
+			<span class="is-small">Sortieren nach:</span> 
+			<button class="is-link is-small" sort-container-selector=":parent :parent :parent :parent [sort-container]" sort-by="name" @click:delegate="action:sort">Name</button>
+		    <button class="is-link is-small" sort-container-selector=":parent :parent :parent :parent [sort-container]" sort-by="availability" @click:delegate="action:sort">Anwesenheit</button>
+		</div>		
+	</div>
 	<div class="view-port">
-	    <div class="container" jstl-foreach="${registrations}" jstl-foreach-var="registration">
-	        <x-campaign-member campaign-id="${registration.campaignid}" member-id="${registration.memberid}" filterable></x-campaign-member>
-	    </div>
-    </div>
-    <div class="container">
-        <button close-modal>schließen</button>
-    </div>
+		<div class="container" jstl-foreach="${registrations}" jstl-foreach-var="registration" sort-container>
+			<x-campaign-member campaign-id="${registration.campaignid}" member-id="${registration.memberid}" filterable sort-by-name="${registration.member.name.toLowerCase()}" sort-by-availability="${functions.calcCampaignAvailability(registration)}"></x-campaign-member>
+		</div>
+	</div>
+	<div class="container">
+		<button close-modal>schließen</button>
+	</div>
 </dialog>

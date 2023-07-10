@@ -49,9 +49,9 @@ export const getRegistrations = async (campaign) => {
 	const result = Array.from(registrations.values());
 
 	return result.sort((a, b) => {
-		if (a.member.name < b.member.name)
+		if (a.member.name.toLowerCase() < b.member.name.toLowerCase())
 			return -1;
-		if (a.member.name > b.member.name)
+		if (a.member.name.toLowerCase() > b.member.name.toLowerCase())
 			return 1;
 		return 0;
 	});
