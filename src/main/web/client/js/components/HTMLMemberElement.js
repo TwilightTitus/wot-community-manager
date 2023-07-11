@@ -17,9 +17,7 @@ class HTMLMemberElement extends Component {
 	#initialized = false;
 
 	constructor() {
-		super();
-		const root = this.root;
-		
+		super();		
 	}
 
 	async init() {
@@ -36,8 +34,7 @@ class HTMLMemberElement extends Component {
 
     async render() {
         const template = await TEMPLATE_ROOT;
-		const member = await getMember(this.memberId);		
-		this.attr("filterable-content", `${member.name}`.toLowerCase());
+		const member = await getMember(this.memberId);
 		await Renderer.render({ container: this.root, template, data: {member} });
     }
 }

@@ -1,6 +1,6 @@
 <dialog is="x-dialog">
 	<div class="container is-horizontal">
-		<input type="search" placeholder="filtern" @input:delegate="action:filter" filter-container=":parent :parent">
+		<input type="search" placeholder="filtern" @input:delegate="global:action:filter-content" filter-container=":parent :parent">
 	</div>
 	<div class="container is-horizontal with-max-content">
 		<div class="is-small">
@@ -15,7 +15,13 @@
 	</div>
 	<div class="view-port">
 		<div class="container" jstl-foreach="${registrations}" jstl-foreach-var="registration" sort-container>
-			<x-campaign-member campaign-id="${registration.campaignid}" member-id="${registration.memberid}" filterable sort-by-name="${registration.member.name.toLowerCase()}" sort-by-availability="${functions.calcCampaignAvailability(registration)}" sort-by-clan="${registration.member.clantag.toLowerCase()}"></x-campaign-member>
+			<x-campaign-member 
+				campaign-id="${registration.campaignid}" 
+				member-id="${registration.memberid}" 
+				filterable-item 
+				sort-by-name="${registration.member.name.toLowerCase()}" 
+				sort-by-availability="${functions.calcCampaignAvailability(registration)}" 
+				sort-by-clan="${registration.member.clantag.toLowerCase()}"></x-campaign-member>
 		</div>
 	</div>
 	<div class="container">
