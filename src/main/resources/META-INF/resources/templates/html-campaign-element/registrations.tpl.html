@@ -1,27 +1,36 @@
 <dialog is="x-dialog">
 	<div class="container is-horizontal">
-		<input type="search" placeholder="filtern" @input:delegate="global:action:filter-content" filter-container=":parent :parent">
+		<input type="search" placeholder="suchen" @input:delegate="mixin-searchable:action:search" searchable-item-container-selector=":parent :parent [searchable-container]">
 	</div>
+	<div class="container is-horizontal is-small">
+		<span>${registrations.length || 0} Anmeldung(en)</span>
+	</div>	
 	<div class="container is-horizontal with-max-content">
-		<div class="is-small">
-			<span>${registrations.length || 0} Anmeldung(en)</span>
+		<div class="width-max-content">
+			<span class="is-small">Sortieren nach:</span>
+			<button class="is-link is-small" sortable-item-container-selector=":parent :parent :parent [sortable-container]" sortable-by="name" @click:delegate="mixin-sortable:action:sort-by">Name</button>
+		    <button class="is-link is-small" sortable-item-container-selector=":parent :parent :parent [sortable-container]" sortable-by="availability" @click:delegate="mixin-sortable:action:sort-by">Anwesenheit</button>
+		    <button class="is-link is-small" sortable-item-container-selector=":parent :parent :parent [sortable-container]" sortable-by="clan" @click:delegate="mixin-sortable:action:sort-by">Clan</button>
 		</div>
 		<div class="width-max-content align-right">
-			<span class="is-small">Sortieren nach:</span> 
-			<button class="is-link is-small" sort-container-selector=":parent :parent :parent :parent [sort-container]" sort-by="name" @click:delegate="action:sort">Name</button>
-		    <button class="is-link is-small" sort-container-selector=":parent :parent :parent :parent [sort-container]" sort-by="availability" @click:delegate="action:sort">Anwesenheit</button>
-		    <button class="is-link is-small" sort-container-selector=":parent :parent :parent :parent [sort-container]" sort-by="clan" @click:delegate="action:sort">Clan</button>
+			<span class="is-small">Filtern nach:</span>
+			<jstl jstl-data="/api/clans" jstl-data-mode="remote" jstl-foreach="${data}" jstl-foreach-var="clan">
+				<button 
+					class="is-link is-small" 
+					filterable-item-container-selector=":parent :parent :parent [filterable-container]" 
+					filterable-by="clantag" 
+					filterable-by-value="${clan.tag}" 
+					@click:delegate="mixin-filterable:action:filter-by">${clan.tag}</button>	
+			</jstl>
 		</div>		
 	</div>
 	<div class="view-port">
-		<div class="container" jstl-foreach="${registrations}" jstl-foreach-var="registration" sort-container>
+		<div class="container" jstl-foreach="${registrations}" jstl-foreach-var="registration" sortable-container searchable-container filterable-container>
 			<x-campaign-member 
 				campaign-id="${registration.campaignid}" 
 				member-id="${registration.memberid}" 
-				filterable-item 
-				sort-by-name="${registration.member.name.toLowerCase()}" 
-				sort-by-availability="${functions.calcCampaignAvailability(registration)}" 
-				sort-by-clan="${registration.member.clantag.toLowerCase()}"></x-campaign-member>
+				searchable-item 
+				filterable-item></x-campaign-member>
 		</div>
 	</div>
 	<div class="container">

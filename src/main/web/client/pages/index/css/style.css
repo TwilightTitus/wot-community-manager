@@ -312,7 +312,6 @@ tr:nth-child(even) {
 }
 
 /* tooltip */
-
 .with-tooltip{
 	position: relative;	
 }
@@ -335,4 +334,19 @@ tr:nth-child(even) {
 
 x-member {
 	word-wrap: anywhere;
+}
+
+/* Sortable */
+.searchable-item-mismatched{
+	display: none;
+}
+
+
+/* Filterable*/
+.filterable-item-filter-mismatched{
+	display: none;
+}
+
+[filterable-by][active]{
+	color: var(--color-selected);
 }

@@ -1,10 +1,34 @@
 <dialog is="x-dialog">
 	<div class="container is-horizontal">
-		<input type="search" placeholder="filtern" @input:delegate="global:action:filter-content" filter-container=":parent :parent">
+		<input type="search" placeholder="filtern" @input:delegate="mixin-searchable:action:search" searchable-item-container-selector=":parent :parent [searchable-container]">
+	</div>
+	<div class="container is-horizontal with-max-content">
+		<div class="width-max-content">
+			<span class="is-small">Sortieren nach:</span>
+			<button class="is-link is-small" sortable-item-container-selector=":parent :parent :parent [sortable-container]" sortable-by="name" @click:delegate="mixin-sortable:action:sort-by">Name</button>
+		    <button class="is-link is-small" sortable-item-container-selector=":parent :parent :parent [sortable-container]" sortable-by="availability" @click:delegate="mixin-sortable:action:sort-by">Anwesenheit</button>
+		    <button class="is-link is-small" sortable-item-container-selector=":parent :parent :parent [sortable-container]" sortable-by="clan" @click:delegate="mixin-sortable:action:sort-by">Clan</button>
+		</div>
+		<div class="width-max-content align-right">
+			<span class="is-small">Filtern nach:</span>
+			<jstl jstl-data="/api/clans" jstl-data-mode="remote" jstl-foreach="${data}" jstl-foreach-var="clan">
+				<button 
+					class="is-link is-small" 
+					filterable-item-container-selector=":parent :parent :parent [filterable-container]" 
+					filterable-by="clantag" 
+					filterable-by-value="${clan.tag}" 
+					@click:delegate="mixin-filterable:action:filter-by">${clan.tag}</button>	
+			</jstl>
+		</div>		
 	</div>
 	<div class="view-port">
-	    <div class="container" jstl-foreach="${members}" jstl-foreach-var="member">
-	        <div member-id="${member.id}" class="container is-horizontal is-selectable ${memberids.has('' + member.id) ? 'is-selected' : ''}" @click:toggleClass:is-selected="" filterable-item>            
+	    <div class="container" jstl-foreach="${members}" jstl-foreach-var="member" searchable-container sortable-container filterable-container>
+	        <div 
+	        	member-id="${member.id}" 
+	        	class="container is-horizontal is-selectable ${memberids.has('' + member.id) ? 'is-selected' : ''}" 
+	        	@click:toggleClass:is-selected="" 
+	        	searchable-item 
+				filterable-item>            
 	            <span class="material-icons is-selected-marker is-selected">check_box</span>
 	            <span class="material-icons is-selected-marker">check_box_outline_blank</span>
 	            <x-member member-id="${member.id}" jstl-if="${!campaignid}"></x-member>

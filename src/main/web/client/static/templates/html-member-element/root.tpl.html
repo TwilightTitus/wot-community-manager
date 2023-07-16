@@ -1,1 +1,8 @@
-<a href="https://www.tomato.gg/stats/EU/${member.name}=${member.id}" target="_blank" title="https://www.tomato.gg" filterable-content="${member.name} ${member.clantag}">${member.name} [${member.clantag ? member.clantag : ''}]</a>
+<a href="https://www.tomato.gg/stats/EU/${member.name}=${member.id}" 
+	target="_blank" 
+	title="https://www.tomato.gg" 
+	searchable-content="${member.name} ${member.clantag}"
+	sortable-by--name="${member.name.toLowerCase()}" 
+	sortable-by--clan="${member.clantag.toLowerCase()}"
+	filterable-by--clantag="${member.clantag}"
+	>${member.name} [${member.clantag ? member.clantag : ''}]</a>

@@ -1,18 +1,14 @@
 //Libs
 import "../../js/HttpInterceptor.js";
 import "@default-js/defaultjs-extdom";
-import "@default-js/defaultjs-app-toolbox";
+import "@default-js/defaultjs-app-toolbox"
+import "@default-js/defaultjs-html-mixins"
 
 //css
 import 'material-icons/iconfont/material-icons.css';
 import "./css/style.css";
 import "./css/form.css";
 import "./css/header.css";
-
-//mixins
-import "../../js/mixins/FilterContent.js";
-import "../../js/mixins/SortContent.js";
-
 
 // custom code
 import "../../js/GlobalFunctions.js";

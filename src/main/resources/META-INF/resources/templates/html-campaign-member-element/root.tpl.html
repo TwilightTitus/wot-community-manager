@@ -1,4 +1,6 @@
-<div class="container is-horizontal">
+<div 
+	class="container is-horizontal" 
+	sortable-by--availability="${functions.calcCampaignAvailability(registration)}">
 	<div class="container is-horizontal is-availability-markers" jstl-foreach="${registration.availability}" jstl-foreach-var="avail" jstl-foreach-status="status" jstl-if="${!registration.fullyavalibility}">
 		<jstl jstl-choose>
 			<div class="availability-marker is-none" jstl-when="${avail.available == 'none'}"></div>
