@@ -22,14 +22,17 @@ const loadRegistrions = async (campaignid) => {
 
 const appendRegistraion = async (registrations, registration) => {
 	const { memberid } = registration;
-	registration.member = await getMember(memberid);
-	registrations.set(`${memberid}`, registration);
+	const member = await getMember(memberid);
+	if (member) {
+		registration.member = member;
+		registrations.set(`${memberid}`, registration);
+	}
 }
 
 const getCachedRegistrations = (campaignid) => {
 	const key = `${campaignid}`;
 	let registrations = CACHE.get(key) || null;
-	if (!registrations){
+	if (!registrations) {
 		registrations = loadRegistrions(campaignid);
 		CACHE.set(key, registrations);
 	}
@@ -45,7 +48,7 @@ const cacheRegistration = async (registration) => {
 }
 
 export const getRegistrations = async (campaign) => {
-	const registrations = await getCachedRegistrations(campaign, true);	
+	const registrations = await getCachedRegistrations(campaign, true);
 	const result = Array.from(registrations.values());
 
 	return result.sort((a, b) => {

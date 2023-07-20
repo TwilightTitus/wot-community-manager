@@ -2,6 +2,7 @@ import { getJSON } from "./ServiceUtils.js";
 import { member } from "./LoginService.js";
 
 const ENDPOINT = `/api/members`;
+const ENDPOINT_BY_ID = (id) => `/api/members/${id}`;
 const EXPIREAFTER = 60 * 60 * 1000;
 
 let EXPIRESAT = 0;
@@ -43,5 +44,12 @@ export const getMembers = async () => {
 
 export const getMember = async (memberid) => {
 	const cache = await getCache();
-	return cache.get(`${memberid}`);
+	let member = cache.get(`${memberid}`);
+	if (!member) {
+		member = await getJSON(ENDPOINT_BY_ID(memberid));
+		if (member)
+			getCache()[member.id] = member;
+	}
+
+	return member;
 }
