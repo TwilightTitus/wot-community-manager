@@ -2,6 +2,7 @@ package de.titus.wot.community.manager.endpoints;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.Instant;
 
 import org.apache.http.client.utils.URIBuilder;
 import org.slf4j.Logger;
@@ -65,23 +66,13 @@ public class SystemEndpoint extends BaseEndpoint {
 	@Path("/access")
 	public Response doAccess() {
 		LoginData loginData = this.getLoginData();
-		if (loginData == null)
+		if (loginData == null || loginData.getMember() == null)
 			throw new UnauthorizedException();
 
-		if (loginData.getExpireAt() - System.currentTimeMillis() > 1000)
-			this.refeshWotLogin(loginData);
+		if (loginData.getExpireAt() - Instant.now().toEpochMilli() < 1000)
+			return Response.temporaryRedirect(this.buildWotLoginRedirect()).build();
 
 		return Response.ok(loginData).build();
-	}
-
-	/**
-	 * Refesh wot login.
-	 *
-	 * @param loginData the login data
-	 */
-	private void refeshWotLogin(final LoginData loginData) {
-		// TODO Auto-generated method stub
-
 	}
 
 	/**
@@ -99,8 +90,10 @@ public class SystemEndpoint extends BaseEndpoint {
 		SystemEndpoint.LOGGER.debug(String.format("accessToke: %s, accoundId: %s, expiresAt: %s", anAccessToken, anAccountId, theExpiresAt));
 
 		LoginData loginData = this.getLoginData();
-		if (loginData != null)
+		if (loginData != null && loginData.getMember() != null) {
+			SystemEndpoint.LOGGER.debug(String.format("user is logged in: %s", loginData));
 			return Response.ok(loginData).build();
+		}
 
 		if (anAccessToken == null || anAccountId == null || theExpiresAt == null)
 			return Response.temporaryRedirect(this.buildWotLoginRedirect()).build();

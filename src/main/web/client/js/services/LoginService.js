@@ -13,7 +13,7 @@ let MEMBER;
 let ACCESSTOKEN;
 let EXPIREAT;
 
-const isExpired = (expireAt) => {
+const isExpired = (expireAt = 0) => {
 	if (expireAt - (Date.now() + DAY) < 0)
 		return true;
 

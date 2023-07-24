@@ -6,7 +6,7 @@ export const storeValue = (key, data) => {
 };
 
 export const loadValue = (key) => {
-	const { data } = JSON.parse(STORAGE.getItem(key) || "{}");
+	const { data = null } = JSON.parse(STORAGE.getItem(key) || "{}");
 	return data;
 };
 

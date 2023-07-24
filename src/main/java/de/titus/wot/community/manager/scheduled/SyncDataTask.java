@@ -5,11 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +20,10 @@ import de.titus.wot.community.manager.wotclient.entities.WotClan;
 import de.titus.wot.community.manager.wotclient.entities.WotClan.WotClanMember;
 import io.quarkus.runtime.Startup;
 import io.quarkus.scheduler.Scheduled;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 
 /**
  * The Class SyncDataTask.
@@ -69,7 +68,7 @@ public class SyncDataTask {
 	@Scheduled(cron = "0 0 0 * * ?")
 	@Transactional
 	public void doSync() {
-		SyncDataTask.LOGGER.debug("start data sync");
+		SyncDataTask.LOGGER.info("start data sync");
 		final List<WotClan> clans = this.wotClient.getClans(this.configuration.clanids());
 		if (clans != null)
 			for (WotClan clan : clans)
@@ -83,7 +82,7 @@ public class SyncDataTask {
 	 * @param aWotClan the a wot clan
 	 */
 	private void syncWotClan(final WotClan aWotClan) {
-		SyncDataTask.LOGGER.debug(String.format("Sync clan data %s", aWotClan));
+		SyncDataTask.LOGGER.info(String.format("Sync clan data %s", aWotClan));
 
 		final Map<Long, Member> currentMemberMap = this.getCurrentClanMemberMap(aWotClan.getId());
 

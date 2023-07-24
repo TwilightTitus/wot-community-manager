@@ -1,10 +1,5 @@
 package de.titus.wot.community.manager.endpoints;
 
-import jakarta.inject.Inject;
-import jakarta.ws.rs.CookieParam;
-import jakarta.ws.rs.core.Cookie;
-import jakarta.ws.rs.core.NewCookie;
-
 import de.titus.wot.community.manager.Configuration;
 import de.titus.wot.community.manager.SessionService;
 import de.titus.wot.community.manager.SessionService.Session;
@@ -12,6 +7,9 @@ import de.titus.wot.community.manager.database.entities.Member;
 import de.titus.wot.community.manager.security.AccessRights;
 import de.titus.wot.community.manager.security.LoginData;
 import io.quarkus.security.UnauthorizedException;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.CookieParam;
+import jakarta.ws.rs.core.NewCookie;
 
 /**
  * The Class BaseEndpoint.
@@ -55,8 +53,10 @@ public class BaseEndpoint {
 	 * @return the new cookie
 	 */
 	public NewCookie toSessionCookie(final Session aSession) {
-		Cookie cookie = new Cookie(SessionService.SESSION_COOKIE_ID, aSession != null ? aSession.getId() : "", "/", null);
-		return new NewCookie(cookie);
+		return new NewCookie.Builder(SessionService.SESSION_COOKIE_ID)
+				.value(aSession != null ? aSession.getId() : "")
+				.path("/")
+				.build();
 	}
 
 	/**
