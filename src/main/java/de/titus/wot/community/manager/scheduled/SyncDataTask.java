@@ -18,7 +18,6 @@ import de.titus.wot.community.manager.wotclient.WotClient;
 import de.titus.wot.community.manager.wotclient.entities.WotAccount;
 import de.titus.wot.community.manager.wotclient.entities.WotClan;
 import de.titus.wot.community.manager.wotclient.entities.WotClan.WotClanMember;
-import io.quarkus.runtime.Startup;
 import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -55,17 +54,9 @@ public class SyncDataTask {
 	WotClient wotClient;
 
 	/**
-	 * On startip.
-	 */
-	@Startup
-	public void onStartip() {
-		this.doSync();
-	}
-
-	/**
 	 * Do sync.
 	 */
-	@Scheduled(cron = "0 0 0 * * ?")
+	@Scheduled(every = "60m", delayed = "10s")
 	@Transactional
 	public void doSync() {
 		SyncDataTask.LOGGER.info("start data sync");
