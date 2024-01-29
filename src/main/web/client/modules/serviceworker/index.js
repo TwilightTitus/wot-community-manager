@@ -1,4 +1,4 @@
-const VERSION = "1.1.3";
+const VERSION = "1.1.4";
 
 
 const CACHENAME = `wot-clan-manager:${VERSION}`;
