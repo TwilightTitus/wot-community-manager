@@ -80,7 +80,9 @@ class HTMLCampaignElement extends Component {
 
 	async render() {
 		const template = await TEMPLATE_ROOT;
-		await Renderer.render({ container: this.root, template, data: {accessRights: accessRights(), open:this.#open, campaign: await getCampaign(this.campaignId) } });
+		const registration = await getMyRegistration(this.campaignId);
+        const isRegistrated = registration != null && typeof registration !== "undefined";
+		await Renderer.render({ container: this.root, template, data: {accessRights: accessRights(), open:this.#open, campaign: await getCampaign(this.campaignId), isRegistrated } });
 	}
 
 	async openRegistrationDialog() {
@@ -117,12 +119,15 @@ class HTMLCampaignElement extends Component {
 				await storeRegistration(this.campaignId, { fullyavailable, availability });
 				dialog.hide();
 				dialog.remove();
+				
+				await this.render();
 			})();
 		});
 		form.on("action:close-registration-dialog", (event) => {
 			event.stopPropagation();
 			dialog.hide();
 			dialog.remove();
+			this.render();
 		});
 
 		const registration = await getMyRegistration(this.campaignId);
