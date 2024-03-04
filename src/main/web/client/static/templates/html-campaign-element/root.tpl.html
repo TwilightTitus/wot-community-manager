@@ -1,7 +1,7 @@
 <details ?open="${open}" open @toggle:delegate="action:toogle-details" >
 	<summary>
 		${campaign.name} (${new Date(campaign.startdate).toLocaleDateString()} - ${new Date(campaign.enddate).toLocaleDateString()})
-		<button class="is-highlight" @click:delegate="action:member-registrate" jstl-if="${new Date(campaign.startdate).getTime() > new Date().setDate(new Date().getDate() + 7)}">${isRegistrated ? "Anmeldung ändern" : "anmelden"}</button>
+		<button class="is-highlight" @click:delegate="action:member-registrate" jstl-if="${new Date(campaign.startdate).getTime() >= new Date()}">${isRegistrated ? "Anmeldung ändern" : "anmelden"}</button>
 	</summary>
 	<div class="container">
 		<div class="container is-horizontal">
