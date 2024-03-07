@@ -1,0 +1,2 @@
+<span jstl-if="${teams.length == 0}" >kein Team</span>
+<span jstl-if="${teams.length > 0}" title="Team: ${teams.map(team => team.name).join('\nTeam: ')}">${teams.length} Team(s)</span>

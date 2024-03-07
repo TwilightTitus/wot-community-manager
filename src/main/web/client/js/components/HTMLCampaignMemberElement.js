@@ -3,6 +3,7 @@ import { Component, define } from "@default-js/defaultjs-html-components";
 import { Renderer, Template } from "@default-js/defaultjs-template-language";
 import { getRegistrations, getMyRegistration, getRegistrationByMember, storeRegistration } from "../services/CampaignRegistrationService.js";
 import { getMember } from "../services/MemberService.js";
+import "./HTMLMemberOfTeamElement.js";
 
 const TEMPLATES_PATH = `${TEMPLATE_BASEPATH}/html-campaign-member-element`;
 export const NODENAME = "x-campaign-member";

@@ -1,10 +1,18 @@
 import {getJSON, postJSON, deleteJSON} from "./ServiceUtils.js";
+import "../entities/Team.js";
 
 const ENDPOINT = `/api/teams`;
 
 const CACHE = new Map();
 const CACHE_CAMPAIGNTEAMS = new Map();
 
+
+/**
+ * @param {?(string|number)} campaignid - campagn id
+ * @param {boolean} [create] - create team cache for campaign
+ * 
+ * @returns {Map<number, Team>}
+ */
 const getCampignCache = (campaignid = null, create=false) => {	
 	const cacheKey = `${campaignid ? campaignid : -1}`;
 	if(CACHE_CAMPAIGNTEAMS.has(cacheKey))
@@ -19,6 +27,14 @@ const getCampignCache = (campaignid = null, create=false) => {
 	return campaignCache;
 }
 
+
+/**
+ * get teams
+ * 
+ * @param {?(string|number)} campaignid - campagn id
+ * 
+ * @returns {Promise<Team[]>}
+ */
 export const getTeams = async (campaignid = null) => {		
 	let campaignCache = getCampignCache(campaignid);
 	if(campaignCache)
@@ -39,6 +55,13 @@ export const getTeams = async (campaignid = null) => {
     return teams;
 };
 
+/**
+ * get team
+ * 
+ * @param {number} id - team id
+ * 
+ * @returns {Promise<Team>}
+ */
 export const getTeam = async (id) => {
     if(CACHE.has(id))
         return CACHE.get(id);
@@ -51,6 +74,13 @@ export const getTeam = async (id) => {
     return team;
 };
 
+/**
+ * store team
+ * 
+ * @param {Team} team - team 
+ * 
+ * @returns {Promise<Team>}
+ */
 export const storeTeam = async (team) => {
     team = await postJSON(`${ENDPOINT}`, team );
     CACHE.set(team.id, team);
@@ -60,6 +90,13 @@ export const storeTeam = async (team) => {
     return team;
 };
 
+/**
+ * delete team
+ * 
+ * @param {number} id - team id
+ * 
+ * @returns {Promise<>}
+ */
 export const deleteTeam = async (id) => {
     await deleteJSON(`${ENDPOINT}/${id}`);    
     const team = CACHE.get(id);

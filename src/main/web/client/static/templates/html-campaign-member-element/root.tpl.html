@@ -1,7 +1,7 @@
 <div 
-	class="container is-horizontal" 
+	class="container is-flex is-horizontal" 
 	sortable-by--availability="${functions.calcCampaignAvailability(registration)}">
-	<div class="container is-horizontal is-availability-markers" jstl-foreach="${registration.availability}" jstl-foreach-var="avail" jstl-foreach-status="status" jstl-if="${!registration.fullyavalibility}">
+	<div class="container is-horizontal is-availability-markers width-full" style="height: 1.7rem;" jstl-foreach="${registration.availability}" jstl-foreach-var="avail" jstl-foreach-status="status" jstl-if="${!registration.fullyavalibility}">
 		<jstl jstl-choose>
 			<div class="availability-marker is-none" jstl-when="${avail.available == 'none'}"></div>
 			<div class="availability-marker is-full" jstl-when="${avail.available == 'full'}"></div>
@@ -10,5 +10,6 @@
 			</div>
 		</jstl>
 	</div>
-	<x-member member-id="${registration.memberid}"></x-member>
+	<x-member class="width-full" member-id="${registration.memberid}"></x-member>
+	<x-member-of-team class="is-small"  campaign-id="${registration.campaignid}" style="width: 8rem; text-align: right" member-id="${registration.memberid}"></x-member-of-team>
 </div>

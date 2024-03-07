@@ -111,11 +111,19 @@ d-route-link {
 	gap: 1rem
 }
 
-.container.is-horizontal {
+.container.is-flex {
+	display: flex;
+	flex-direction: column;	
+}
+.container.is-flex.is-horizontal {	
+	flex-direction: row;
+}
+
+.container:not(.is-flex).is-horizontal {
 	grid: auto / auto-flow 1fr;
 }
 
-.container.is-horizontal.with-max-content {
+.container:not(.is-flex).is-horizontal.with-max-content {
 	grid: auto / auto-flow auto;
 }
 

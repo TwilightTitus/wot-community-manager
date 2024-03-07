@@ -1,5 +1,6 @@
 import { APPGLOBAL, PAGEURL, URL_LOGIN, URL_ACCESS } from "../Constants.js";
 import { loadValue, storeValue, deleteValue } from "./LocalStorageService.js";
+import "../entities/Member.js";
 
 const SECOND = 1000;
 const MINUTE = 60 * SECOND;
@@ -104,6 +105,11 @@ export const accessRights = () => {
 	return ACCESSRIGHTS;
 }
 
+/**
+ * current member
+ * 
+ * @returns {Member}
+ */
 export const member = () => {
 	return MEMBER;
 }

@@ -1,5 +1,9 @@
 import { getJSON } from "./ServiceUtils.js";
 import { member } from "./LoginService.js";
+import "../entities/Member.js";
+
+
+
 
 const ENDPOINT = `/api/members`;
 const ENDPOINT_BY_ID = (id) => `/api/members/${id}`;
