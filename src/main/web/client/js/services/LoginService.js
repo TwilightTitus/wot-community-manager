@@ -40,8 +40,8 @@ const access = async () => {
 	EXPIREAT = expireAt;
 	ACCESSRIGHTS = accessRights;
 
-	APPGLOBALS.member = MEMBER
-	APPGLOBALS.accessRights = ACCESSRIGHTS;
+	APPGLOBAL.member = MEMBER
+	APPGLOBAL.accessRights = ACCESSRIGHTS;
 
 	scheduleNexAccessTokenRefresh();
 
