@@ -6,7 +6,8 @@ import "@default-js/defaultjs-app-toolbox/index.js"
 import "@default-js/defaultjs-html-mixins/index.js"
 
 //css
-import 'material-icons/iconfont/material-icons.css';
+import "material-icons/iconfont/material-icons.css";
+import "./css/properties.css";
 import "./css/style.css";
 import "./css/form.css";
 import "./css/header.css";

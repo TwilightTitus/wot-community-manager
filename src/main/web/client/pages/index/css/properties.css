@@ -1,0 +1,63 @@
+:root {	
+	/********************************************************************
+	 * color
+	 *******************************************************************/
+	
+	
+	--default--dark-color: black;
+	--default--light-color: white;
+	--default--highlight-color: #057001;
+	--default--danger-color: #830e01d4;
+	--default--warn-color: #ab6a02;
+	--default--info-color: #686666d4;
+	
+		
+	--default--text-color: color-mix(in srgb, var(--default--dark-color), white 20%);
+	--default--highlight-color:  var(--default--highlight-color);
+	--default--bg-color: color-mix(in srgb, black, white 90%);
+	--default--border-color: var(--default--text-color);	
+	
+	/* page */
+	--page--bg-color: color-mix(in srgb, black, white 90%);
+	
+	
+	/* header */
+	--header--height: 7.5rem;
+	--header--bg-color: color-mix(in srgb, black, white 20%);
+	--header--text-color: color-mix(in srgb, var(--default--dark-color), white 90%);
+	--header--highlight-color: #00ff00;
+	--header--branding-color: #00ff00;
+	--header--branding-text: "Clan Management";
+	--header--branding-text--mobile: "Clan Mngmt";
+	
+	/* card */
+	--card--bg-color: color-mix(in srgb, black, white 90%);
+	--card--header-color: color-mix(in srgb, black, white 90%);
+	
+	
+	/* button */
+	--button--text-color: var(--default--bg-color);
+	--button--bg-color: var(--default--text-color);
+	--button--border-color:var(--button--text-color);
+	--button--higlight-color: var(--default--highlight-color);
+	
+	
+	
+	
+	--color-bg: color-mix(in srgb, black, white 90%);
+	--color-text: color-mix(in srgb, black, white 20%);
+	--color-border: var(--color-text);
+	
+	--color-selected: color-mix(in srgb, var(--color-highlight) 50%, black );
+
+
+	/********************************************************************
+	 * Layout
+	 *******************************************************************/
+	 --font-size: clamp(16px, 0.8vh, 24px);
+	 --font-family: sans-serif;
+	 
+	--border-size: 0.125rem;
+	--border-definition: var(--color-border) solid var(--border-size);
+	--border-radius: 0.3rem;
+}
