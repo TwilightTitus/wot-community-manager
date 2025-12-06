@@ -13,6 +13,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"@default-js/defaultjs-app-toolbox": "latest",
+		"@default-js/defaultjs-expression-language": "latest",
 		"@default-js/defaultjs-extdom": "latest",
 		"@default-js/defaultjs-html-components": "latest",
 		"@default-js/defaultjs-html-dropdown": "latest",
@@ -53,6 +54,6 @@
 		"util": "^0.12.5",
 		"webpack": "^5.74.0",
 		"webpack-cli": "^4.10.0",
-		"webpack-dev-server": "^4.7.4"
+		"webpack-dev-server": "^5.2.2"
 	}
 }

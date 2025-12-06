@@ -22,5 +22,8 @@ public class AccessRights {
 
 	/** The management. */
 	private boolean management;
+	
+	/** The admin. */
+	private boolean admin;
 
 }

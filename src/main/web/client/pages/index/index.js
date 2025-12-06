@@ -1,8 +1,9 @@
 //Libs
 import "../../js/HttpInterceptor.js";
-import "@default-js/defaultjs-extdom";
-import "@default-js/defaultjs-app-toolbox"
-import "@default-js/defaultjs-html-mixins"
+import "../../js/setup/index.js";
+import "@default-js/defaultjs-extdom/index.js";
+import "@default-js/defaultjs-app-toolbox/index.js"
+import "@default-js/defaultjs-html-mixins/index.js"
 
 //css
 import 'material-icons/iconfont/material-icons.css';

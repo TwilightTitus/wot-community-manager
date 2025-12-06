@@ -4,57 +4,27 @@ import java.util.Set;
 
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
-import io.quarkus.runtime.annotations.StaticInitSafe;
 import io.smallrye.config.ConfigMapping;
 
 /**
  * The Interface Configuration.
  */
-@StaticInitSafe
-@ConfigMapping(prefix = "wot.community.manager" )
+@ConfigMapping(prefix = "application" )
 @ConfigRoot(phase = ConfigPhase.RUN_TIME)
 public interface Configuration {
+	String externalUrl();
+	Long sessionTimeout();
+	String applicationid();
+	Set<String> clanids();
+	Set<String> admins();
+	Set<String> allowedManagementRoles();
 	
-	/**
-	 * External url.
-	 *
-	 * @return the string
-	 */
-	public String externalUrl();
+	WOT wot();
 	
-	/**
-	 * Session timeout.
-	 *
-	 * @return the long
-	 */
-	public long sessionTimeout();
 	
-	/**
-	 * Applicationid.
-	 *
-	 * @return the string
-	 */
-	public String applicationid();
-	
-	/**
-	 * Clanids.
-	 *
-	 * @return the sets the
-	 */
-	public Set<String> clanids();
-	
-	/**
-	 * Allowed management roles.
-	 *
-	 * @return the sets the
-	 */
-	public Set<String> allowedManagementRoles();
-	
-	/**
-	 * Wot login url.
-	 *
-	 * @return the string
-	 */
-	public String wotLoginUrl();
+	public interface WOT{
+		String apiUrl();
+		String loginUrl();
+	}
 
 }

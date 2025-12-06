@@ -1,10 +1,8 @@
 package de.titus.wot.community.manager.endpoints;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.time.Instant;
 
-import org.apache.http.client.utils.URIBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +26,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriBuilder;
 
 /**
  * The Class SystemEndpoint.
@@ -85,9 +84,11 @@ public class SystemEndpoint extends BaseEndpoint {
 	 */
 	@GET
 	@Path("/login")
-	public Response doLogin(@QueryParam("access_token") final String anAccessToken, @QueryParam("account_id") final String anAccountId, @QueryParam("expires_at") final Long theExpiresAt) {
+	public Response doLogin(@QueryParam("access_token") final String anAccessToken,
+			@QueryParam("account_id") final String anAccountId, @QueryParam("expires_at") final Long theExpiresAt) {
 
-		SystemEndpoint.LOGGER.debug(String.format("accessToke: %s, accoundId: %s, expiresAt: %s", anAccessToken, anAccountId, theExpiresAt));
+		SystemEndpoint.LOGGER.debug(String.format("accessToke: %s, accoundId: %s, expiresAt: %s", anAccessToken,
+				anAccountId, theExpiresAt));
 
 		LoginData loginData = this.getLoginData();
 		if (loginData != null && loginData.getMember() != null) {
@@ -103,16 +104,15 @@ public class SystemEndpoint extends BaseEndpoint {
 			return Response.temporaryRedirect(this.buildWotLoginRedirect()).build();
 
 		final Member member = this.memberRepository.findById(Long.parseLong(anAccountId));
-		if (member == null || member.getRole() == null || Constants.MEMBER_ROLE__EXMEMBER.equalsIgnoreCase(member.getRole()))
+		if (member == null || member.getRole() == null
+				|| Constants.MEMBER_ROLE__EXMEMBER.equalsIgnoreCase(member.getRole()))
 			throw new UnauthorizedException("Unknown member!");
 
 		Session session = this.getSession(true);
 		loginData = this.buildLoginData(anAccessToken, theExpiresAt, member, session);
 
-		return Response
-				.temporaryRedirect(URI.create(this.configuration.externalUrl()))
-				.cookie(this.toSessionCookie(session))
-				.build();
+		return Response.temporaryRedirect(URI.create(this.configuration.externalUrl()))
+				.cookie(this.toSessionCookie(session)).build();
 
 	}
 
@@ -125,10 +125,8 @@ public class SystemEndpoint extends BaseEndpoint {
 	@Path("/logout")
 	public Response doLogout() {
 		this.removeSession();
-		return Response
-				.temporaryRedirect(URI.create(this.configuration.externalUrl()))
-				.cookie(this.toSessionCookie(null))
-				.build();
+		return Response.temporaryRedirect(URI.create(this.configuration.externalUrl()))
+				.cookie(this.toSessionCookie(null)).build();
 	}
 
 	/**
@@ -140,7 +138,8 @@ public class SystemEndpoint extends BaseEndpoint {
 	 * @param session       the session
 	 * @return the login data
 	 */
-	private LoginData buildLoginData(final String anAccessToken, final Long theExpiresAt, final Member aMember, final Session session) {
+	private LoginData buildLoginData(final String anAccessToken, final Long theExpiresAt, final Member aMember,
+			final Session session) {
 		final LoginData loginData = new LoginData();
 		loginData.setAccessToken(anAccessToken);
 		loginData.setExpireAt(System.currentTimeMillis() + theExpiresAt);
@@ -161,8 +160,15 @@ public class SystemEndpoint extends BaseEndpoint {
 	private AccessRights createAccessRights(final Member aMember) {
 		final AccessRights accessRights = new AccessRights();
 
-		accessRights.setAccess(aMember.getClanId() != null && aMember.getRole() != null && !Constants.MEMBER_ROLE__EXMEMBER.equalsIgnoreCase(aMember.getRole()));
-		accessRights.setManagement(this.configuration.allowedManagementRoles().contains(aMember.getRole()));
+		if (configuration.admins().contains(Long.toString(aMember.getId()))) {
+			accessRights.setAccess(true);
+			accessRights.setManagement(true);
+			accessRights.setAdmin(true);
+		} else {
+			accessRights.setAccess(aMember.getClanId() != null && aMember.getRole() != null
+					&& !Constants.MEMBER_ROLE__EXMEMBER.equalsIgnoreCase(aMember.getRole()));
+			accessRights.setManagement(this.configuration.allowedManagementRoles().contains(aMember.getRole()));
+		}
 
 		return accessRights;
 	}
@@ -174,16 +180,15 @@ public class SystemEndpoint extends BaseEndpoint {
 	 */
 	private URI buildWotLoginRedirect() {
 		if (SystemEndpoint.REDIRECTURI == null) {
-			try {
-				SystemEndpoint.REDIRECTURI = new URIBuilder(this.configuration.wotLoginUrl())
-						.addParameter("application_id", this.configuration.applicationid())
-						.addParameter("display", "page")
-						.addParameter("nofollow", "0")
-						.addParameter("redirect_uri", this.configuration.externalUrl() + "/api/system/login")
-						.build();
-			} catch (URISyntaxException e) {
-				throw new RuntimeException(e);
-			}
+
+			REDIRECTURI = UriBuilder
+					.fromUri(URI.create(this.configuration.wot().loginUrl()))
+					.queryParam("application_id", this.configuration.applicationid())
+					.queryParam("display", "page")
+					.queryParam("nofollow", "0")
+					.queryParam("redirect_uri", String.format("%s/api/system/login", this.configuration.externalUrl()))
+					.build();
+
 		}
 
 		return SystemEndpoint.REDIRECTURI;

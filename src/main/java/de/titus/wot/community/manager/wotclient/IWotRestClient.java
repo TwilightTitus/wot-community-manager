@@ -1,6 +1,9 @@
 package de.titus.wot.community.manager.wotclient;
 
-import jakarta.enterprise.context.ApplicationScoped;
+import de.titus.wot.community.manager.wotclient.entities.WotAccountsRequest;
+import de.titus.wot.community.manager.wotclient.entities.WotAccountsResponse;
+import de.titus.wot.community.manager.wotclient.entities.WotClansRequest;
+import de.titus.wot.community.manager.wotclient.entities.WotClansResponse;
 import jakarta.ws.rs.BeanParam;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -8,19 +11,10 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
-
-import de.titus.wot.community.manager.wotclient.entities.WotAccountsRequest;
-import de.titus.wot.community.manager.wotclient.entities.WotAccountsResponse;
-import de.titus.wot.community.manager.wotclient.entities.WotClansRequest;
-import de.titus.wot.community.manager.wotclient.entities.WotClansResponse;
-
 /**
  * The Interface IWotRestClient.
  */
 @Path("/wot")
-@RegisterRestClient(configKey = "wot-api")
-@ApplicationScoped
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public interface IWotRestClient {
